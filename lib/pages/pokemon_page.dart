@@ -58,7 +58,7 @@ class _PokemonPageState extends State<PokemonPage> {
               return const Text('err'); // TODO: UPDATE THIS
             } else {
               return Consumer<PokemonProvider>(builder: (context, obj, child) {
-                return Scaffold(
+                return Scaffold( // FIXME: DUPLICATE SCAFFOLD
                   backgroundColor: colors[obj.getType],
                   appBar: AppBar(
                     title: Text(obj.getPokemon.name),
