@@ -48,6 +48,9 @@ class _MoveTileState extends State<MoveTile> {
     return ExpansionTile(
       title: Text(
         widget.moveAndUrl['move']['name'],
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+        ),
       ),
       children: [
         FutureBuilder(

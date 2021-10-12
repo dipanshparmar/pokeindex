@@ -241,7 +241,17 @@ class _PokemonPageState extends State<PokemonPage> {
           children: moves
               .sublist(0, 10)
               .map(
-                (e) => CustomCard(getName(e['move']['name'])),
+                (e) => GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MovePage(e),
+                    ),
+                  ),
+                  child: CustomCard(
+                    getName(e['move']['name']),
+                  ),
+                ),
               )
               .toList(),
         ),

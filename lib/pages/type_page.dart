@@ -20,6 +20,11 @@ class _TypePageState extends State<TypePage> {
   // this will hold the future that will load the description of the type
   late Future _future;
 
+  // method to get the name by converting the first char to uppercase
+  String getName(String name) {
+    return name[0].toUpperCase() + name.substring(1);
+  }
+
   // method to get the damage info of the type
   Future<Map> getTypeDamageInfo() async {
     // making the get request
@@ -45,7 +50,7 @@ class _TypePageState extends State<TypePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.type['type']['name']),
+        title: Text(getName(widget.type['type']['name'])),
       ),
       body: FutureBuilder(
         future: _future,
