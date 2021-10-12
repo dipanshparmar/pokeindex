@@ -10,6 +10,12 @@ import '../utils/utils.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// pages
+import './pages.dart';
+
+// models
+import '../models/pokemon.dart';
+
 class PokemonPage extends StatefulWidget {
   const PokemonPage(this._name, {Key? key}) : super(key: key);
 
@@ -99,9 +105,9 @@ class _PokemonPageState extends State<PokemonPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     const Heading('Moves'),
-                                    // only show the see all button if there are moves
+                                    // show the see all button only if there are moves
                                     obj.getPokemon.moves.isNotEmpty
-                                        ? _buildSeeAllButton()
+                                        ? _buildSeeAllButton(obj.getPokemon)
                                         : const Text(''),
                                   ],
                                 ),
@@ -127,9 +133,14 @@ class _PokemonPageState extends State<PokemonPage> {
   }
 
   // method to build see all button
-  GestureDetector _buildSeeAllButton() {
+  GestureDetector _buildSeeAllButton(Pokemon pokemon) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AllMovesPage(pokemon),
+        ),
+      ),
       child: Row(
         children: const [
           Text(

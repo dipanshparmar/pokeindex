@@ -7,8 +7,14 @@ import '../providers/providers.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage(this._searchType, {Key? key}) : super(key: key);
+
+  // search type
+  final SearchType _searchType;
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -32,6 +38,9 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget._searchType == SearchType.pokemon
+          ? Colors.white
+          : colors[Provider.of<PokemonProvider>(context).getType],
       appBar: AppBar(
         title: TextField(
           textAlignVertical: TextAlignVertical.center,
@@ -67,8 +76,11 @@ class _SearchPageState extends State<SearchPage> {
         builder: (context, obj, child) {
           // if search query is not empty
           if (searchQuery.isNotEmpty) {
-            // getting the search results
-            final List results = obj.getSearchResults(searchQuery);
+            // getting the search results according to the search type and the query
+            final List results = obj.getSearchResults(
+              searchType: widget._searchType,
+              query: searchQuery,
+            );
 
             // if there are results
             if (results.isNotEmpty) {
@@ -78,10 +90,12 @@ class _SearchPageState extends State<SearchPage> {
                   // getting the current result
                   final result = results[index];
 
-                  return PokemonTile(
-                    nameAndUrl: result,
-                    index: index,
-                  );
+                  return widget._searchType == SearchType.pokemon
+                      ? PokemonTile(
+                          nameAndUrl: result,
+                          index: index,
+                        )
+                      : MoveTile(moveAndUrl: result, index: index);
                 },
               );
             }

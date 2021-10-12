@@ -10,6 +10,9 @@ import './pages.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -41,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const SearchPage(),
+                builder: (context) => const SearchPage(SearchType.pokemon),
               ),
             ),
           )

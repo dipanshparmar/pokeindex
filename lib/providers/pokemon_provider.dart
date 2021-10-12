@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 // models
 import '../models/models.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class PokemonProvider with ChangeNotifier {
   // this list will hold the map of the name and the url
   List<dynamic> _pokemonNameAndUrl = [];
@@ -129,9 +132,18 @@ class PokemonProvider with ChangeNotifier {
   }
 
   // method to get results according to the search query
-  List<dynamic> getSearchResults(String query) {
-    return _pokemonNameAndUrl
-        .where((element) => element['name'].contains(query))
-        .toList();
+  List<dynamic> getSearchResults(
+      {required SearchType searchType, required String query}) {
+    // if search type is pokemon
+    if (searchType == SearchType.pokemon) {
+      return _pokemonNameAndUrl
+          .where((element) => element['name'].contains(query))
+          .toList();
+    } else {
+      // if search type is move
+      return _pokemon.moves
+          .where((element) => element['move']['name'].contains(query))
+          .toList();
+    }
   }
 }
