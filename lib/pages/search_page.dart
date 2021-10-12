@@ -34,6 +34,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          textAlignVertical: TextAlignVertical.center,
           controller: _controller,
           autofocus: true,
           cursorColor: Colors.white70,

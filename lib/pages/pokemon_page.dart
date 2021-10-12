@@ -58,7 +58,8 @@ class _PokemonPageState extends State<PokemonPage> {
               return const Text('err'); // TODO: UPDATE THIS
             } else {
               return Consumer<PokemonProvider>(builder: (context, obj, child) {
-                return Scaffold( // FIXME: DUPLICATE SCAFFOLD
+                return Scaffold(
+                  // FIXME: DUPLICATE SCAFFOLD
                   backgroundColor: colors[obj.getType],
                   appBar: AppBar(
                     title: Text(obj.getPokemon.name),
@@ -223,7 +224,7 @@ class _PokemonPageState extends State<PokemonPage> {
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
         child: Row(
           children: moves
               .map(
@@ -241,7 +242,7 @@ class _PokemonPageState extends State<PokemonPage> {
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
         child: Row(
           children: obj.getPokemon.abilities
               .map(
@@ -259,7 +260,7 @@ class _PokemonPageState extends State<PokemonPage> {
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
         child: Row(
           children: obj.getPokemon.types
               .map(
