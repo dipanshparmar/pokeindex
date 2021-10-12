@@ -277,7 +277,17 @@ class _PokemonPageState extends State<PokemonPage> {
         child: Row(
           children: obj.getPokemon.types
               .map(
-                (e) => CustomCard(getName(e['type']['name'])),
+                (e) => GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TypePage(e),
+                    ),
+                  ),
+                  child: CustomCard(
+                    getName(e['type']['name']),
+                  ),
+                ),
               )
               .toList(),
         ),
