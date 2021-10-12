@@ -17,10 +17,11 @@ import './pages.dart';
 import '../models/pokemon.dart';
 
 class PokemonPage extends StatefulWidget {
-  const PokemonPage(this._name, {Key? key}) : super(key: key);
+  const PokemonPage(this._name, this._url, {Key? key}) : super(key: key);
 
-  // getting the name of the pokemon
+  // getting the name and url of the pokemon
   final String _name;
+  final String _url;
 
   @override
   State<PokemonPage> createState() => _PokemonPageState();
@@ -175,7 +176,12 @@ class _PokemonPageState extends State<PokemonPage> {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AboutPage(widget._name),
+                ),
+              ),
               child: const Text(
                 'ABOUT',
                 style: TextStyle(
