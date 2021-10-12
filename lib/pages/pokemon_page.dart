@@ -269,7 +269,17 @@ class _PokemonPageState extends State<PokemonPage> {
         child: Row(
           children: obj.getPokemon.abilities
               .map(
-                (e) => CustomCard(getName(e['ability']['name'])),
+                (e) => GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AbilityPage(e),
+                    ),
+                  ),
+                  child: CustomCard(
+                    getName(e['ability']['name']),
+                  ),
+                ),
               )
               .toList(),
         ),

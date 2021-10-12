@@ -38,7 +38,7 @@ class PokemonTile extends StatelessWidget {
         ],
       ),
       title: Text(
-        nameAndUrl['name'],
+        getName(nameAndUrl['name']),
         style: const TextStyle(
           fontWeight: FontWeight.w600,
         ),
