@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
           textSelectionTheme: const TextSelectionThemeData(
             selectionHandleColor: Colors.indigoAccent,
           ),
+          fontFamily: 'Capriola',
         ),
         home: const HomePage(),
       ),

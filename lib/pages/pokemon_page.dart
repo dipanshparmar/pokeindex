@@ -70,7 +70,9 @@ class _PokemonPageState extends State<PokemonPage> {
                     // FIXME: DUPLICATE SCAFFOLD
                     backgroundColor: colors[obj.getType],
                     appBar: AppBar(
-                      title: Text(obj.getPokemon.name),
+                      title: Text(
+                        obj.getPokemon.name,
+                      ),
                     ),
                     body: Column(
                       children: [
