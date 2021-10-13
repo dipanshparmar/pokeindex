@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-// providers
-import '../providers/providers.dart';
 
 // models
 import '../models/models.dart';
@@ -30,8 +26,6 @@ class AllMovesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          colors[Provider.of<PokemonProvider>(context, listen: false).getType],
       appBar: AppBar(
         title: Text(
           getName('${pokemon.name}\'s moves'),
