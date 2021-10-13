@@ -64,68 +64,70 @@ class _PokemonPageState extends State<PokemonPage> {
             if (snapshot.hasError) {
               return const Text('err'); // TODO: UPDATE THIS
             } else {
-              return Consumer<PokemonProvider>(builder: (context, obj, child) {
-                return Scaffold(
-                  // FIXME: DUPLICATE SCAFFOLD
-                  backgroundColor: colors[obj.getType],
-                  appBar: AppBar(
-                    title: Text(obj.getPokemon.name),
-                  ),
-                  body: Column(
-                    children: [
-                      Expanded(
-                        child: ListView(
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            Container(
-                              height: 300,
-                              padding: const EdgeInsets.all(20),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: 'assets/images/placeholder.png',
-                                image: obj.getPokemon.imageUrl,
+              return Consumer<PokemonProvider>(
+                builder: (context, obj, child) {
+                  return Scaffold(
+                    // FIXME: DUPLICATE SCAFFOLD
+                    backgroundColor: colors[obj.getType],
+                    appBar: AppBar(
+                      title: Text(obj.getPokemon.name),
+                    ),
+                    body: Column(
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            physics: const BouncingScrollPhysics(),
+                            children: [
+                              Container(
+                                height: 300,
+                                padding: const EdgeInsets.all(20),
+                                child: FadeInImage.assetNetwork(
+                                  placeholder: 'assets/images/placeholder.png',
+                                  image: obj.getPokemon.imageUrl,
+                                ),
                               ),
-                            ),
-                            _buildStats(obj),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Heading('Type'),
-                                _buildTypes(obj),
-                                const Heading('Weight'),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
+                              _buildStats(obj),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Heading('Type'),
+                                  _buildTypes(obj),
+                                  const Heading('Weight'),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0,
+                                    ),
+                                    child: CustomCard(
+                                        '${obj.getPokemon.weight} Kg'),
                                   ),
-                                  child:
-                                      CustomCard('${obj.getPokemon.weight} Kg'),
-                                ),
-                                const Heading('Abilities'),
-                                _buildAbilities(obj),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Heading('Moves'),
-                                    // show the see all button only if there are moves
-                                    obj.getPokemon.moves.isNotEmpty
-                                        ? _buildSeeAllButton(obj.getPokemon)
-                                        : const Text(''),
-                                  ],
-                                ),
-                                _buildMoves(obj),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                              ],
-                            )
-                          ],
+                                  const Heading('Abilities'),
+                                  _buildAbilities(obj),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Heading('Moves'),
+                                      // show the see all button only if there are moves
+                                      obj.getPokemon.moves.isNotEmpty
+                                          ? _buildSeeAllButton(obj.getPokemon)
+                                          : const Text(''),
+                                    ],
+                                  ),
+                                  _buildMoves(obj),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      _buildButtons(context),
-                    ],
-                  ),
-                );
-              });
+                        _buildButtons(context),
+                      ],
+                    ),
+                  );
+                },
+              );
             }
           }
         },
@@ -245,7 +247,10 @@ class _PokemonPageState extends State<PokemonPage> {
         child: Row(
           // only showing 10 moves
           children: moves
-              .sublist(0, 10)
+              .sublist(
+                0,
+                moves.length > 10 ? 10 : null,
+              ) // if there are more than 10 moves then fetch first 10 moves only, otherwise fetch every move
               .map(
                 (e) => GestureDetector(
                   onTap: () => Navigator.push(
