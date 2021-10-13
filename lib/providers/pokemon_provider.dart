@@ -87,6 +87,9 @@ class PokemonProvider with ChangeNotifier {
     // getting the types
     final List types = decodedData['types'];
 
+    // getting the held items
+    final List heldItems = decodedData['held_items'];
+
     // updating the pokemon object
     _pokemon = Pokemon(
       id: id,
@@ -102,6 +105,7 @@ class PokemonProvider with ChangeNotifier {
       speed: speed,
       types: types,
       weight: weight,
+      heldItems: heldItems,
     );
   }
 

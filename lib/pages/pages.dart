@@ -6,3 +6,4 @@ export './type_page.dart';
 export './move_page.dart';
 export './ability_page.dart';
 export './about_page.dart';
+export './held_item_page.dart';

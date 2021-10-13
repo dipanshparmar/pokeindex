@@ -28,7 +28,6 @@ class PokemonTile extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => PokemonPage(
             nameAndUrl['name'],
-            nameAndUrl['url'],
           ),
         ),
       ),

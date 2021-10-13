@@ -12,6 +12,7 @@ class Pokemon {
   final int weight;
   final List abilities;
   final List moves;
+  final List heldItems;
 
   Pokemon({
     required this.id,
@@ -27,5 +28,6 @@ class Pokemon {
     required this.weight,
     required this.abilities,
     required this.moves,
+    required this.heldItems,
   });
 }

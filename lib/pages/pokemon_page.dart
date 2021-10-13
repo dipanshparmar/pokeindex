@@ -17,11 +17,10 @@ import './pages.dart';
 import '../models/pokemon.dart';
 
 class PokemonPage extends StatefulWidget {
-  const PokemonPage(this._name, this._url, {Key? key}) : super(key: key);
+  const PokemonPage(this._name, {Key? key}) : super(key: key);
 
   // getting the name and url of the pokemon
   final String _name;
-  final String _url;
 
   @override
   State<PokemonPage> createState() => _PokemonPageState();
@@ -100,17 +99,22 @@ class _PokemonPageState extends State<PokemonPage> {
                                       horizontal: 20.0,
                                     ),
                                     child: CustomCard(
-                                        '${obj.getPokemon.weight} Kg'),
+                                      '${obj.getPokemon.weight} Kg',
+                                    ),
                                   ),
                                   const Heading('Abilities'),
                                   _buildAbilities(obj),
+                                  if (obj.getPokemon.heldItems.isNotEmpty)
+                                    const Heading('Held items'),
+                                  if (obj.getPokemon.heldItems.isNotEmpty)
+                                    _buildHeldItems(obj),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Heading('Moves'),
-                                      // show the see all button only if there are moves
-                                      obj.getPokemon.moves.isNotEmpty
+                                      // show the see all button only if there are moves > 10
+                                      obj.getPokemon.moves.length > 10
                                           ? _buildSeeAllButton(obj.getPokemon)
                                           : const Text(''),
                                     ],
@@ -133,6 +137,31 @@ class _PokemonPageState extends State<PokemonPage> {
             }
           }
         },
+      ),
+    );
+  }
+
+  // method to build held items
+  Widget _buildHeldItems(PokemonProvider obj) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0, right: 10),
+      child: Row(
+        children: obj.getPokemon.heldItems
+            .map(
+              (e) => GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HeldItemPage(
+                      e['item']['name'],
+                      e['item']['url'],
+                    ),
+                  ),
+                ),
+                child: CustomCard(e['item']['name']),
+              ),
+            )
+            .toList(),
       ),
     );
   }
