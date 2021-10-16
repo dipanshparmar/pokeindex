@@ -38,9 +38,6 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: widget._searchType == SearchType.pokemon
-          ? Colors.white
-          : colors[Provider.of<PokemonProvider>(context).getType],
       appBar: AppBar(
         title: TextField(
           textAlignVertical: TextAlignVertical.center,
