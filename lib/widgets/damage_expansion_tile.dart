@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DamageExpensionTile extends StatelessWidget {
+class DamageExpensionTile extends StatefulWidget {
   const DamageExpensionTile({
     Key? key,
     required this.title,
@@ -18,18 +18,38 @@ class DamageExpensionTile extends StatelessWidget {
   final double damage;
 
   @override
+  State<DamageExpensionTile> createState() => _DamageExpensionTileState();
+}
+
+class _DamageExpensionTileState extends State<DamageExpensionTile> {
+  // bool to decide whether the tile is expanded or not
+  bool _isExpanded = false; // initially false
+
+  @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
-        title,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        widget.title,
+        style: TextStyle(
+          fontWeight: _isExpanded ? FontWeight.bold : FontWeight.normal,
+        ),
       ),
-      children: types.isNotEmpty
-          ? types
+      onExpansionChanged: (value) {
+        setState(() {
+          _isExpanded = value;
+        });
+      },
+      children: widget.types.isNotEmpty
+          ? widget.types
               .map(
                 (e) => ListTile(
-                  title: Text(e['name']),
-                  trailing: Text('x$damage'),
+                  title: Text(
+                    e['name'],
+                    style: const TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                  trailing: Text('x${widget.damage}'),
                 ),
               )
               .toList()
