@@ -47,6 +47,9 @@ class _PokemonPageState extends State<PokemonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(widget._name),
+      ),
       body: FutureBuilder(
         future: _fetchPokemonData,
         builder: (context, snapshot) {
@@ -65,15 +68,11 @@ class _PokemonPageState extends State<PokemonPage> {
             } else {
               return Consumer<PokemonProvider>(
                 builder: (context, obj, child) {
-                  return Scaffold(
-                    // FIXME: DUPLICATE SCAFFOLD
-                    backgroundColor: colors[obj.getType],
-                    appBar: AppBar(
-                      title: Text(
-                        obj.getPokemon.name,
-                      ),
-                    ),
-                    body: Column(
+                  return Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    color: colors[obj.getType],
+                    child: Column(
                       children: [
                         Expanded(
                           child: ListView(
