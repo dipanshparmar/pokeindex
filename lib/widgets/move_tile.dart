@@ -41,15 +41,24 @@ class _MoveTileState extends State<MoveTile> {
     _future = getMoveInfo();
   }
 
+  // bool to store whether the tile is expanded or not
+  bool _isExpanded = false; // initially to false
+
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
         widget.moveAndUrl['move']['name'],
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
+        style: TextStyle(
+          fontWeight: _isExpanded ? FontWeight.w600 : FontWeight.normal,
         ),
       ),
+      initiallyExpanded: false,
+      onExpansionChanged: (value) {
+        setState(() {
+          _isExpanded = value;
+        });
+      },
       children: [
         FutureBuilder(
           future: _future,
