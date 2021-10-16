@@ -55,7 +55,10 @@ class _DamageExpensionTileState extends State<DamageExpensionTile> {
               .toList()
           : [
               const ListTile(
-                title: Text('None!'),
+                title: Text(
+                  'None!',
+                  style: TextStyle(fontSize: 14),
+                ),
               )
             ],
       iconColor: Theme.of(context).primaryColor,
