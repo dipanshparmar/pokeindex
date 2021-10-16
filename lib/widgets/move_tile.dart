@@ -67,7 +67,8 @@ class _MoveTileState extends State<MoveTile> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return LinearProgressIndicator(
                 color: Theme.of(context).primaryColor,
-                minHeight: 1,
+                backgroundColor: Theme.of(context).primaryColor.withOpacity(.5),
+                minHeight: 3,
               );
             }
 
