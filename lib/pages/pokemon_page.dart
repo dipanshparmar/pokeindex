@@ -107,18 +107,20 @@ class _PokemonPageState extends State<PokemonPage> {
                                     const Heading('Held items'),
                                   if (obj.getPokemon.heldItems.isNotEmpty)
                                     _buildHeldItems(obj),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Heading('Moves'),
-                                      // show the see all button only if there are moves > 10
-                                      obj.getPokemon.moves.length > 10
-                                          ? _buildSeeAllButton(obj.getPokemon)
-                                          : const Text(''),
-                                    ],
-                                  ),
-                                  _buildMoves(obj),
+                                  if (obj.getPokemon.moves.isNotEmpty)
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Heading('Moves'),
+                                        // show the see all button only if there are moves > 10
+                                        obj.getPokemon.moves.length > 10
+                                            ? _buildSeeAllButton(obj.getPokemon)
+                                            : const Text(''),
+                                      ],
+                                    ),
+                                  if (obj.getPokemon.moves.isNotEmpty)
+                                    _buildMoves(obj),
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -262,17 +264,7 @@ class _PokemonPageState extends State<PokemonPage> {
     // getting the moves
     final moves = obj.getPokemon.moves;
 
-    // if there are no moves then let the user know
-    if (moves.isEmpty) {
-      return const SizedBox(
-        height: 30,
-        child: Center(
-          child: Text('No moves!'),
-        ),
-      );
-    }
-
-    // if there are moves then build the moves
+    // builing the moves
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
