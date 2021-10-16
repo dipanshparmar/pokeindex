@@ -7,11 +7,9 @@ class MoveTile extends StatefulWidget {
   const MoveTile({
     Key? key,
     required this.moveAndUrl,
-    required this.index,
   }) : super(key: key);
 
   final Map moveAndUrl;
-  final int index;
 
   @override
   State<MoveTile> createState() => _MoveTileState();

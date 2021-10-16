@@ -7,13 +7,13 @@ class PokemonTile extends StatelessWidget {
   const PokemonTile({
     Key? key,
     required this.nameAndUrl,
-    required this.index,
+    this.index,
   }) : super(key: key);
 
   final Map nameAndUrl;
 
   // index
-  final int index;
+  final int? index;
 
   // method to get the name by converting the first char to uppercase
   String getName(String name) {
@@ -34,7 +34,13 @@ class PokemonTile extends StatelessWidget {
       leading: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('# ${index + 1}'),
+          index != null
+              ? Text('${index! + 1}')
+              : Icon(
+                  Icons.circle,
+                  color: Theme.of(context).primaryColor,
+                  size: 5,
+                ),
         ],
       ),
       title: Text(

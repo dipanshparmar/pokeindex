@@ -46,7 +46,7 @@ class AllMovesPage extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: pokemon.moves.length,
         itemBuilder: (context, index) {
-          return MoveTile(moveAndUrl: pokemon.moves[index], index: index);
+          return MoveTile(moveAndUrl: pokemon.moves[index]);
         },
       ),
     );
