@@ -65,14 +65,9 @@ class _MoveTileState extends State<MoveTile> {
           builder: (context, snapshot) {
             // if waiting
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
+              return LinearProgressIndicator(
+                color: Theme.of(context).primaryColor,
+                minHeight: 1,
               );
             }
 
@@ -91,7 +86,7 @@ class _MoveTileState extends State<MoveTile> {
       ],
       iconColor: Theme.of(context).primaryColor,
       textColor: Theme.of(context).primaryColor,
-      childrenPadding: const EdgeInsets.all(20),
+      childrenPadding: const EdgeInsets.only(right: 20, left: 20, bottom: 10),
     );
   }
 }
