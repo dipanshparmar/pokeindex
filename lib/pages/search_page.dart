@@ -85,6 +85,7 @@ class _SearchPageState extends State<SearchPage> {
             // if there are results
             if (results.isNotEmpty) {
               return ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: results.length,
                 itemBuilder: (context, index) {
                   // getting the current result
