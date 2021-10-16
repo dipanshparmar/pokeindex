@@ -27,8 +27,18 @@ class _AboutPageState extends State<AboutPage> {
     // decoding the repsonse
     final decodedResponse = jsonDecode(response.body);
 
-    return (decodedResponse['flavor_text_entries'][0]['flavor_text'] as String)
-        .replaceAll('\n', ' ');
+    // getting all the entries
+    final List entries = decodedResponse['flavor_text_entries'];
+
+    // returning the flavor text that is in english
+    for (int i = 0; i < entries.length; i++) {
+      if (entries[i]['language']['name'] == 'en') {
+        return entries[i]['flavor_text'].replaceAll('\n', ' ');
+      }
+    }
+
+    // if no en entry found then return the first one
+    return entries[0]['flavor_text'].replaceAll('\n', ' ');
   }
 
   @override
