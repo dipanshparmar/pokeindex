@@ -145,23 +145,27 @@ class _PokemonPageState extends State<PokemonPage> {
   Widget _buildHeldItems(PokemonProvider obj) {
     return Padding(
       padding: const EdgeInsets.only(left: 20.0, right: 10),
-      child: Row(
-        children: obj.getPokemon.heldItems
-            .map(
-              (e) => GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => HeldItemPage(
-                      e['item']['name'],
-                      e['item']['url'],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        child: Row(
+          children: obj.getPokemon.heldItems
+              .map(
+                (e) => GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HeldItemPage(
+                        e['item']['name'],
+                        e['item']['url'],
+                      ),
                     ),
                   ),
+                  child: CustomCard(e['item']['name']),
                 ),
-                child: CustomCard(e['item']['name']),
-              ),
-            )
-            .toList(),
+              )
+              .toList(),
+        ),
       ),
     );
   }
