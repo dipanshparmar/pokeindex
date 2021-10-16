@@ -39,11 +39,7 @@ class PokemonTile extends StatelessWidget {
       ),
       title: Text(
         getName(nameAndUrl['name']),
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-        ),
       ),
-      subtitle: const Text('Click to know more...'),
       trailing: Icon(
         Icons.arrow_forward_ios,
         size: 15,
