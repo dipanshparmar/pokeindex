@@ -144,11 +144,11 @@ class _PokemonPageState extends State<PokemonPage> {
 
   // method to build held items
   Widget _buildHeldItems(PokemonProvider obj) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20.0, right: 10),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
         child: Row(
           children: obj.getPokemon.heldItems
               .map(
