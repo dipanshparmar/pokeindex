@@ -24,6 +24,16 @@ class _AboutPageState extends State<AboutPage> {
       Uri.parse('https://pokeapi.co/api/v2/pokemon-species/${widget._name}'),
     );
 
+    // getting the body
+    final body = response.body;
+
+    // if response not found then let the user know
+    if (body.toLowerCase() == 'not found') {
+      return 'No about data found!';
+    }
+
+    // if there is response then work with it
+
     // decoding the repsonse
     final decodedResponse = jsonDecode(response.body);
 
