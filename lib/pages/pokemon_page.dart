@@ -81,10 +81,15 @@ class _PokemonPageState extends State<PokemonPage> {
                               Container(
                                 height: 300,
                                 padding: const EdgeInsets.all(20),
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: 'assets/images/placeholder.png',
-                                  image: obj.getPokemon.imageUrl,
-                                ),
+                                child: obj.getPokemon.imageUrl != null
+                                    ? FadeInImage.assetNetwork(
+                                        placeholder:
+                                            'assets/images/placeholder.png',
+                                        image: obj.getPokemon.imageUrl!,
+                                      )
+                                    : const Center(
+                                        child: Text('No image data!'),
+                                      ),
                               ),
                               _buildStats(obj),
                               Column(

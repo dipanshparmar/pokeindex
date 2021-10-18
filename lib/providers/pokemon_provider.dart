@@ -52,7 +52,7 @@ class PokemonProvider with ChangeNotifier {
     final int id = decodedData['id'];
 
     // getting the image url
-    final String imageUrl =
+    final String? imageUrl =
         decodedData['sprites']['other']['official-artwork']['front_default'];
 
     // getting the hp

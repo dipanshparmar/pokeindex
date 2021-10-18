@@ -2,7 +2,7 @@ class Pokemon {
   final int id;
   final String name;
   final List types;
-  final String imageUrl;
+  final String? imageUrl;
   final int hp;
   final int attack;
   final int defense;
