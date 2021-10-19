@@ -7,3 +7,4 @@ export './move_page.dart';
 export './ability_page.dart';
 export './about_page.dart';
 export './held_item_page.dart';
+export './evolution_page.dart';

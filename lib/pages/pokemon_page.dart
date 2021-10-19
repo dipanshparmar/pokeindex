@@ -17,10 +17,17 @@ import './pages.dart';
 import '../models/pokemon.dart';
 
 class PokemonPage extends StatefulWidget {
-  const PokemonPage(this._name, {Key? key}) : super(key: key);
+  const PokemonPage(
+    this._name, {
+    Key? key,
+    this.fromEvolution = false,
+  }) : super(key: key);
 
   // getting the name and url of the pokemon
   final String _name;
+
+  // to decide to show the evolution button or not
+  final bool fromEvolution;
 
   @override
   State<PokemonPage> createState() => _PokemonPageState();
@@ -234,31 +241,38 @@ class _PokemonPageState extends State<PokemonPage> {
               ),
             ),
           ),
-          const SizedBox(
-            width: 20,
-          ),
-          Expanded(
-            child: ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  Theme.of(context).primaryColor,
+          if (!widget.fromEvolution)
+            const SizedBox(
+              width: 20,
+            ),
+          if (!widget.fromEvolution)
+            Expanded(
+              child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).primaryColor,
+                  ),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(
+                      vertical: 20,
+                    ),
+                  ),
                 ),
-                padding: MaterialStateProperty.all(
-                  const EdgeInsets.symmetric(
-                    vertical: 20,
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EvolutionPage(widget._name),
+                  ),
+                ),
+                child: const Text(
+                  'EVOLUTION',
+                  style: TextStyle(
+                    letterSpacing: 1.3,
+                    fontSize: 13,
                   ),
                 ),
               ),
-              onPressed: () {},
-              child: const Text(
-                'EVOLUTION',
-                style: TextStyle(
-                  letterSpacing: 1.3,
-                  fontSize: 13,
-                ),
-              ),
-            ),
-          )
+            )
         ],
       ),
     );
