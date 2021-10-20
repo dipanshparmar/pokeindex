@@ -105,6 +105,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
               // if data
               if (_pokemons.isNotEmpty) {
                 return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
                   itemCount: _pokemons.length,
                   itemBuilder: (context, index) {
                     // current pokemon
