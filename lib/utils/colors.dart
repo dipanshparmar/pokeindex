@@ -16,4 +16,8 @@ const Map colors = {
   'flying': Color(0xFFF5F5F5),
   'fighting': Color(0xFFE6E0D4),
   'normal': Color(0xFFF5F5F5),
+  'ice': Color(0xFF9ED8F0),
+  'ghost': Color(0xFFC9C9C9),
+  'steel': Color(0xFFD1E1F6),
+  'dark': Color(0xFFBABABA),
 };
