@@ -21,7 +21,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
   late Future _future;
 
   // list of map to hold the evolution pokemon names and urls
-  List _pokemons = [];
+  final List _pokemons = [];
 
   void fetchPokemonData(Map data) {
     // getting the name
@@ -122,11 +122,20 @@ class _EvolutionPageState extends State<EvolutionPage> {
                           ),
                         );
                       },
-                      title: Text(pokemon),
+                      title: Text(
+                        pokemon,
+                        style: TextStyle(
+                          color: widget._name == pokemon
+                              ? Theme.of(context).primaryColor
+                              : null,
+                        ),
+                      ),
                       trailing: Text(
                         '${index + 1}',
                         style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                          color: widget._name == pokemon
+                              ? Theme.of(context).primaryColor
+                              : null,
                         ),
                       ),
                     );
