@@ -203,4 +203,18 @@ class PokemonProvider with ChangeNotifier {
     // if no en entry found then return the first one
     return entries[0]['flavor_text'].replaceAll('\n', ' ');
   }
+
+  // method to load held item description
+  Future<String> loadHeldItemDesc(String url) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse(url),
+    );
+
+    // decoding the response
+    final decodedResponse = jsonDecode(response.body);
+
+    // returning the effect entry
+    return decodedResponse['effect_entries'][0]['effect'];
+  }
 }
