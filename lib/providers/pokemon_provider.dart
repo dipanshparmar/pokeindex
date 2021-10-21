@@ -150,4 +150,23 @@ class PokemonProvider with ChangeNotifier {
           .toList();
     }
   }
+
+  // method to load the ability description
+  Future<String> loadAbilityDescription(String url) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse(url),
+    );
+
+    // decoding the response
+    final decodedResponse = jsonDecode(response.body);
+
+    // getting all the entries
+    final List entries = decodedResponse['effect_entries'];
+
+    // returning the entry with english language because the response order is different each time
+    return entries.firstWhere(
+      (element) => element['language']['name'] == 'en',
+    )['effect'];
+  }
 }

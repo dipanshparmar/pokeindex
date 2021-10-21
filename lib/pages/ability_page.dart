@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/pokemon_provider.dart';
 
 class AbilityPage extends StatefulWidget {
   const AbilityPage(this.abilityData, {Key? key}) : super(key: key);
@@ -22,36 +23,19 @@ class _AbilityPageState extends State<AbilityPage> {
   // this will hold the future that will load the ability description
   late final Future _future;
 
-  // method to load the ability description
-  Future<void> loadAbilityDescription() async {
-    // making the get request
-    final http.Response response = await http.get(
-      Uri.parse(widget.abilityData['ability']['url']),
-    );
-
-    // decoding the response
-    final decodedResponse = jsonDecode(response.body);
-
-    // getting all the entries
-    final List entries = decodedResponse['effect_entries'];
-
-    // returning the entry with english language because the response order is different each time
-    return entries.firstWhere(
-      (element) => element['language']['name'] == 'en',
-    )['effect'];
-  }
-
   @override
   void initState() {
     super.initState();
 
     // assigning the future
-    _future = loadAbilityDescription();
+    _future = Provider.of<PokemonProvider>(context, listen: false)
+        .loadAbilityDescription(
+      widget.abilityData['ability']['url'],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    loadAbilityDescription();
     return Scaffold(
       appBar: AppBar(
         title: Text(
