@@ -32,7 +32,10 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget._name}\'s about'),
+        title: Text(
+          Provider.of<PokemonProvider>(context, listen: false)
+              .getName('${widget._name}\'s about'),
+        ),
       ),
       body: FutureBuilder(
         future: _future,

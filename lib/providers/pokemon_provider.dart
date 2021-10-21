@@ -312,4 +312,18 @@ class PokemonProvider with ChangeNotifier {
   String getName(String name) {
     return name[0].toUpperCase() + name.substring(1);
   }
+
+  // method to get the info about a move
+  Future<String> getMoveInfo(String url) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse(url),
+    );
+
+    // decoding the response
+    final decodedData = jsonDecode(response.body);
+
+    // returning the move info
+    return decodedData['effect_entries'][0]['effect'];
+  }
 }

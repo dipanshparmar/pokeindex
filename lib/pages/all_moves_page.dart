@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // models
 import '../models/models.dart';
@@ -12,13 +13,11 @@ import './pages.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// providers
+import '../providers/providers.dart';
+
 class AllMovesPage extends StatelessWidget {
   const AllMovesPage(this.pokemon, {Key? key}) : super(key: key);
-
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
 
   // storing the moves
   final Pokemon pokemon;
@@ -28,7 +27,8 @@ class AllMovesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          getName('${pokemon.name}\'s moves'),
+          Provider.of<PokemonProvider>(context, listen: false)
+              .getName('${pokemon.name}\'s moves'),
         ),
         actions: [
           IconButton(

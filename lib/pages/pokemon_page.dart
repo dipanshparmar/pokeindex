@@ -46,16 +46,14 @@ class _PokemonPageState extends State<PokemonPage> {
         .fetchPokemonData(widget._name);
   }
 
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._name),
+        title: Text(
+          Provider.of<PokemonProvider>(context, listen: false)
+              .getName(widget._name),
+        ),
       ),
       body: FutureBuilder(
         future: _fetchPokemonData,
@@ -174,7 +172,10 @@ class _PokemonPageState extends State<PokemonPage> {
                       ),
                     ),
                   ),
-                  child: CustomCard(e['item']['name']),
+                  child: CustomCard(
+                    Provider.of<PokemonProvider>(context, listen: false)
+                        .getName(e['item']['name']),
+                  ),
                 ),
               )
               .toList(),
@@ -304,9 +305,7 @@ class _PokemonPageState extends State<PokemonPage> {
                       builder: (context) => MovePage(e),
                     ),
                   ),
-                  child: CustomCard(
-                    getName(e['move']['name']),
-                  ),
+                  child: CustomCard(e['move']['name']),
                 ),
               )
               .toList(),
@@ -332,9 +331,7 @@ class _PokemonPageState extends State<PokemonPage> {
                       builder: (context) => AbilityPage(e),
                     ),
                   ),
-                  child: CustomCard(
-                    getName(e['ability']['name']),
-                  ),
+                  child: CustomCard(e['ability']['name']),
                 ),
               )
               .toList(),
@@ -360,9 +357,7 @@ class _PokemonPageState extends State<PokemonPage> {
                       builder: (context) => TypePage(e),
                     ),
                   ),
-                  child: CustomCard(
-                    getName(e['type']['name']),
-                  ),
+                  child: CustomCard(e['type']['name']),
                 ),
               )
               .toList(),

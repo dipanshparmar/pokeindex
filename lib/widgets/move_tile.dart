@@ -2,6 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/providers.dart';
 
 class MoveTile extends StatefulWidget {
   const MoveTile({
@@ -19,26 +23,14 @@ class _MoveTileState extends State<MoveTile> {
   // this will hold the future
   late Future _future;
 
-  // method to get the info about a move
-  Future<String> getMoveInfo() async {
-    // making the get request
-    final http.Response response = await http.get(
-      Uri.parse(widget.moveAndUrl['move']['url']),
-    );
-
-    // decoding the response
-    final decodedData = jsonDecode(response.body);
-
-    // returning the move info
-    return decodedData['effect_entries'][0]['effect'];
-  }
-
   @override
   void initState() {
     super.initState();
 
     // assigning the future
-    _future = getMoveInfo();
+    _future = Provider.of<PokemonProvider>(context, listen: false).getMoveInfo(
+      widget.moveAndUrl['move']['url'],
+    );
   }
 
   // bool to store whether the tile is expanded or not
@@ -48,12 +40,13 @@ class _MoveTileState extends State<MoveTile> {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
-        widget.moveAndUrl['move']['name'],
+        Provider.of<PokemonProvider>(context, listen: false).getName(
+          widget.moveAndUrl['move']['name'],
+        ),
         style: TextStyle(
           fontWeight: _isExpanded ? FontWeight.w600 : FontWeight.normal,
         ),
       ),
-      initiallyExpanded: false,
       onExpansionChanged: (value) {
         setState(() {
           _isExpanded = value;

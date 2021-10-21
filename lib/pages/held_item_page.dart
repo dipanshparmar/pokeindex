@@ -34,7 +34,10 @@ class _HeldItemPageState extends State<HeldItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._name),
+        title: Text(
+          Provider.of<PokemonProvider>(context, listen: false)
+              .getName(widget._name),
+        ),
       ),
       body: FutureBuilder(
         future: _future,

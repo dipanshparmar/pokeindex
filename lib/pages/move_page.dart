@@ -15,11 +15,6 @@ class MovePage extends StatefulWidget {
 }
 
 class _MovePageState extends State<MovePage> {
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
-
   // this future will hold the future that will load the move description
   late Future _future;
 
@@ -38,7 +33,9 @@ class _MovePageState extends State<MovePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          getName(widget.moveData['move']['name']),
+          Provider.of<PokemonProvider>(context, listen: false).getName(
+            widget.moveData['move']['name'],
+          ),
         ),
       ),
       body: FutureBuilder(

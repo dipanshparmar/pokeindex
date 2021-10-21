@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/providers.dart';
 
 // pages
 import '../pages/pages.dart';
@@ -14,11 +18,6 @@ class PokemonTile extends StatelessWidget {
 
   // index
   final int? index;
-
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,8 @@ class PokemonTile extends StatelessWidget {
         ],
       ),
       title: Text(
-        getName(nameAndUrl['name']),
+        Provider.of<PokemonProvider>(context, listen: false)
+            .getName(nameAndUrl['name']),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,

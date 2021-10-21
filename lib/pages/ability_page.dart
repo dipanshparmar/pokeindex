@@ -15,11 +15,6 @@ class AbilityPage extends StatefulWidget {
 }
 
 class _AbilityPageState extends State<AbilityPage> {
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
-
   // this will hold the future that will load the ability description
   late final Future _future;
 
@@ -39,7 +34,7 @@ class _AbilityPageState extends State<AbilityPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          getName(
+          Provider.of<PokemonProvider>(context, listen: false).getName(
             widget.abilityData['ability']['name'],
           ),
         ),

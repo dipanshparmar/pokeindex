@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/providers.dart';
 
 class DamageExpensionTile extends StatefulWidget {
   const DamageExpensionTile({
@@ -44,7 +48,8 @@ class _DamageExpensionTileState extends State<DamageExpensionTile> {
               .map(
                 (e) => ListTile(
                   title: Text(
-                    e['name'],
+                    Provider.of<PokemonProvider>(context, listen: false)
+                        .getName(e['name']),
                     style: const TextStyle(
                       fontSize: 14,
                     ),
