@@ -274,6 +274,9 @@ class PokemonProvider with ChangeNotifier {
       Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$pokemonName'),
     );
 
+    // clearing the previous data from the list
+    _pokemonsFromChain.clear();
+
     // if response is not found then just return
     if (speciesResponse.body.toLowerCase() == 'not found') {
       return;
@@ -295,9 +298,6 @@ class PokemonProvider with ChangeNotifier {
 
     // getting the evolvesTo
     final evolvesTo = chainData['chain'];
-
-    // clearing the previous data from the list
-    _pokemonsFromChain.clear();
 
     // fetching the pokemons
     fetchPokemonDataFromEvolutionChain(evolvesTo);
