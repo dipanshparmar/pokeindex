@@ -55,9 +55,7 @@ class _TypePageState extends State<TypePage> {
             // if loading is complete
             // if error
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('err'), // TODO: UPDATE THIS
-              );
+              return const ErrorText();
             } else {
               // if no error
               // get the data

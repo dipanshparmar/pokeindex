@@ -7,6 +7,9 @@ import '../providers/providers.dart';
 // pages
 import './pages.dart';
 
+// widgets
+import '../widgets/widgets.dart';
+
 class EvolutionPage extends StatefulWidget {
   const EvolutionPage(this._name, {Key? key}) : super(key: key);
 
@@ -52,7 +55,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
           } else {
             // if error
             if (snapshot.hasError) {
-              return const Text('err'); // TODO: update this
+              return const ErrorText();
             } else {
               // if data
               // getting the pokemons from the chain once the fetching is complete

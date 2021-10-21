@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
             // if the data is loaded
             // if an error is encountered
             if (snapshot.hasError) {
-              return Text('err'); // TODO: update this
+              return const ErrorText();
             } else {
               // if everything was succesful
               return Consumer<PokemonProvider>(

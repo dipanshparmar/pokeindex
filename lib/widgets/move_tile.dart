@@ -1,11 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 // providers
 import '../providers/providers.dart';
+
+// widgets
+import '../widgets/widgets.dart';
 
 class MoveTile extends StatefulWidget {
   const MoveTile({
@@ -68,9 +68,7 @@ class _MoveTileState extends State<MoveTile> {
             // if loaded
             if (snapshot.hasError) {
               // if error
-              return const Center(
-                child: Text('err'), // TODO: UPDATE THIS
-              );
+              return const ErrorText();
             } else {
               // if no error
               return Text(snapshot.data as String);

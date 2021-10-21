@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 // providers
@@ -53,7 +54,7 @@ class _HeldItemPageState extends State<HeldItemPage> {
             // if completed
             // if error
             if (snapshot.hasError) {
-              return const Text('err'); // TODO: UPDATE THIS
+              return const ErrorText();
             } else {
               // if data
               return Padding(

@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 // providers
 import '../providers/pokemon_provider.dart';
 
+// widgets
+import '../widgets/widgets.dart';
+
 class AbilityPage extends StatefulWidget {
   const AbilityPage(this.abilityData, {Key? key}) : super(key: key);
 
@@ -53,9 +56,7 @@ class _AbilityPageState extends State<AbilityPage> {
             // if loaded
             // if error
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('err'), // TODO: UPDATE THIS
-              );
+              return const ErrorText();
             } else {
               return Padding(
                 padding: const EdgeInsets.all(20.0),

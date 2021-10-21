@@ -69,7 +69,7 @@ class _PokemonPageState extends State<PokemonPage> {
             // if the data has been loaded
             // if there is an error
             if (snapshot.hasError) {
-              return const Text('err'); // TODO: UPDATE THIS
+              return const ErrorText();
             } else {
               return Consumer<PokemonProvider>(
                 builder: (context, obj, child) {

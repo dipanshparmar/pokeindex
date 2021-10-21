@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 // providers
 import '../providers/providers.dart';
 
+// widggets
+import '../widgets/widgets.dart';
+
 class AboutPage extends StatefulWidget {
   const AboutPage(this._name, {Key? key}) : super(key: key);
 
@@ -51,9 +54,7 @@ class _AboutPageState extends State<AboutPage> {
             // if loading finished
             // if error
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('err'), // TODO: UPDATE THIS
-              );
+              return const ErrorText();
             } else {
               // if loaded
               return Padding(

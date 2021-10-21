@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 // providers
 import '../providers/providers.dart';
 
+// widgets
+import '../widgets/widgets.dart';
+
 class MovePage extends StatefulWidget {
   const MovePage(this.moveData, {Key? key}) : super(key: key);
 
@@ -52,9 +55,7 @@ class _MovePageState extends State<MovePage> {
             // if loaded
             // if error
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('err'), // TODO: UDPATE THIS
-              );
+              return const ErrorText();
             } else {
               // if data
               return Padding(
