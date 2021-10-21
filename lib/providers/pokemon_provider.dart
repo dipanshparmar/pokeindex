@@ -169,4 +169,38 @@ class PokemonProvider with ChangeNotifier {
       (element) => element['language']['name'] == 'en',
     )['effect'];
   }
+
+  // method to load about
+  Future<String> loadAbout(String pokemonName) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$pokemonName'),
+    );
+
+    // getting the body
+    final body = response.body;
+
+    // if response not found then let the user know
+    if (body.toLowerCase() == 'not found') {
+      return 'No about data found!';
+    }
+
+    // if there is response then work with it
+
+    // decoding the repsonse
+    final decodedResponse = jsonDecode(response.body);
+
+    // getting all the entries
+    final List entries = decodedResponse['flavor_text_entries'];
+
+    // returning the flavor text that is in english
+    for (int i = 0; i < entries.length; i++) {
+      if (entries[i]['language']['name'] == 'en') {
+        return entries[i]['flavor_text'].replaceAll('\n', ' ');
+      }
+    }
+
+    // if no en entry found then return the first one
+    return entries[0]['flavor_text'].replaceAll('\n', ' ');
+  }
 }
