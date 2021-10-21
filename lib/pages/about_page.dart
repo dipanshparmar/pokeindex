@@ -57,6 +57,15 @@ class _AboutPageState extends State<AboutPage> {
               return const ErrorText();
             } else {
               // if loaded
+              // if data not found then let the user know
+              if ((snapshot.data as String).toLowerCase() ==
+                  'no about data found!') {
+                return Center(
+                  child: Text(snapshot.data as String),
+                );
+              }
+
+              // else show the data
               return Padding(
                 padding: const EdgeInsets.all(20),
                 child: Text(snapshot.data as String),
