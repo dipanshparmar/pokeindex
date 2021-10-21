@@ -16,6 +16,9 @@ class PokemonProvider with ChangeNotifier {
   // this will store the selected pokemon data
   late Pokemon _pokemon;
 
+  // list of map to hold the evolution pokemon names
+  final List<String> _pokemonsFromChain = [];
+
   // method to fetch pokemon names and URLs
   Future<void> fetchPokemons() async {
     // making the get request
@@ -243,5 +246,62 @@ class PokemonProvider with ChangeNotifier {
     final decodedData = jsonDecode(response.body);
 
     return decodedData;
+  }
+
+  // method to find each pokemon's name and url from the chain
+  // works together with loadEvolutionData method
+  void fetchPokemonDataFromEvolutionChain(Map data) {
+    // getting the name
+    final String name = data['species']['name'];
+
+    // appending the data
+    _pokemonsFromChain.add(name);
+
+    // getting evolvesTo
+    final List evolvesTo = data['evolves_to'];
+
+    if (evolvesTo.isEmpty) {
+      return;
+    }
+
+    fetchPokemonDataFromEvolutionChain(evolvesTo[0]);
+  }
+
+  // method to load the chain
+  Future<void> loadEvolutionData(String pokemonName) async {
+    // making the request to species data
+    final http.Response speciesResponse = await http.get(
+      Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$pokemonName'),
+    );
+
+    // if response is not found then just return
+    if (speciesResponse.body.toLowerCase() == 'not found') {
+      return;
+    }
+
+    // decoding the response
+    final data = jsonDecode(speciesResponse.body);
+
+    // getting the evolution chain url
+    final evolutionChainLink = data['evolution_chain']['url'];
+
+    // making the request to the evolution chain
+    final http.Response evolutionResponse = await http.get(
+      Uri.parse(evolutionChainLink),
+    );
+
+    // decoding the body
+    final chainData = jsonDecode(evolutionResponse.body);
+
+    // getting the evolvesTo
+    final evolvesTo = chainData['chain'];
+
+    // fetching the pokemons
+    fetchPokemonDataFromEvolutionChain(evolvesTo);
+  }
+
+  // getter to get the pokemons of the chain
+  List<String> get getPokemonsOfChain {
+    return _pokemonsFromChain;
   }
 }

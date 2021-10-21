@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/providers.dart';
 
 // pages
 import './pages.dart';
@@ -20,65 +21,13 @@ class _EvolutionPageState extends State<EvolutionPage> {
   // to store the future
   late Future _future;
 
-  // list of map to hold the evolution pokemon names and urls
-  final List _pokemons = [];
-
-  void fetchPokemonData(Map data) {
-    // getting the name
-    final String name = data['species']['name'];
-
-    // appending the data
-    _pokemons.add(name);
-
-    // getting evolvesTo
-    final List evolvesTo = data['evolves_to'];
-
-    if (evolvesTo.isEmpty) {
-      return;
-    }
-
-    fetchPokemonData(evolvesTo[0]);
-  }
-
-  // method to make the request
-  Future<void> loadEvolutionData() async {
-    // making the request to species data
-    final http.Response speciesResponse = await http.get(
-      Uri.parse('https://pokeapi.co/api/v2/pokemon-species/${widget._name}'),
-    );
-
-    // if response is not found then just return
-    if (speciesResponse.body.toLowerCase() == 'not found') {
-      return;
-    }
-
-    // decoding the response
-    final data = jsonDecode(speciesResponse.body);
-
-    // getting the evolution chain url
-    final evolutionChainLink = data['evolution_chain']['url'];
-
-    // making the request to the evolution chain
-    final http.Response evolutionResponse = await http.get(
-      Uri.parse(evolutionChainLink),
-    );
-
-    // decoding the body
-    final chainData = jsonDecode(evolutionResponse.body);
-
-    // getting the evolvesTo
-    final evolvesTo = chainData['chain'];
-
-    // fetching the pokemons
-    fetchPokemonData(evolvesTo);
-  }
-
   @override
   void initState() {
     super.initState();
 
     // assigning the future
-    _future = loadEvolutionData();
+    _future = Provider.of<PokemonProvider>(context, listen: false)
+        .loadEvolutionData(widget._name);
   }
 
   @override
@@ -103,6 +52,11 @@ class _EvolutionPageState extends State<EvolutionPage> {
               return const Text('err'); // TODO: update this
             } else {
               // if data
+              // getting the pokemons from the chain once the fetching is complete
+              final List<String> _pokemons =
+                  Provider.of<PokemonProvider>(context, listen: false)
+                      .getPokemonsOfChain;
+
               if (_pokemons.isNotEmpty) {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
