@@ -81,7 +81,8 @@ class _EvolutionPageState extends State<EvolutionPage> {
                         );
                       },
                       title: Text(
-                        pokemon,
+                        Provider.of<PokemonProvider>(context, listen: false)
+                            .getName(pokemon),
                         style: TextStyle(
                           color: widget._name == pokemon
                               ? Theme.of(context).primaryColor
