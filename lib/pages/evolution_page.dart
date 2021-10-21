@@ -71,7 +71,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => PokemonPage(
-                              _pokemons[index]!,
+                              _pokemons[index],
                               fromEvolution: true,
                             ),
                           ),
