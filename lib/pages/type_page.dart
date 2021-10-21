@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+
+// providers
+import '../providers/providers.dart';
 
 // widgets
 import '../widgets/widgets.dart';
@@ -25,25 +26,15 @@ class _TypePageState extends State<TypePage> {
     return name[0].toUpperCase() + name.substring(1);
   }
 
-  // method to get the damage info of the type
-  Future<Map> getTypeDamageInfo() async {
-    // making the get request
-    final http.Response response = await http.get(
-      Uri.parse(widget.type['type']['url']),
-    );
-
-    // decoding response
-    final decodedData = jsonDecode(response.body);
-
-    return decodedData;
-  }
-
   @override
   void initState() {
     super.initState();
 
     // assigning the future
-    _future = getTypeDamageInfo();
+    _future =
+        Provider.of<PokemonProvider>(context, listen: false).getTypeDamageInfo(
+      widget.type['type']['url'],
+    );
   }
 
   @override

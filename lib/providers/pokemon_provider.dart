@@ -231,4 +231,17 @@ class PokemonProvider with ChangeNotifier {
     // returning the move info
     return decodedResponse['effect_entries'][0]['effect'];
   }
+
+  // method to get the damage info of the type
+  Future<Map> getTypeDamageInfo(String url) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse(url),
+    );
+
+    // decoding response
+    final decodedData = jsonDecode(response.body);
+
+    return decodedData;
+  }
 }
