@@ -296,6 +296,9 @@ class PokemonProvider with ChangeNotifier {
     // getting the evolvesTo
     final evolvesTo = chainData['chain'];
 
+    // clearing the previous data from the list
+    _pokemonsFromChain.clear();
+
     // fetching the pokemons
     fetchPokemonDataFromEvolutionChain(evolvesTo);
   }
@@ -303,5 +306,10 @@ class PokemonProvider with ChangeNotifier {
   // getter to get the pokemons of the chain
   List<String> get getPokemonsOfChain {
     return _pokemonsFromChain;
+  }
+
+  // method to get the name by converting the first char to uppercase
+  String getName(String name) {
+    return name[0].toUpperCase() + name.substring(1);
   }
 }
