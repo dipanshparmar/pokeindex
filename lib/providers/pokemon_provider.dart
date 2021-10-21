@@ -217,4 +217,18 @@ class PokemonProvider with ChangeNotifier {
     // returning the effect entry
     return decodedResponse['effect_entries'][0]['effect'];
   }
+
+  // this method will load the move description
+  Future<void> loadMoveDesc(String url) async {
+    // making the get request
+    final http.Response response = await http.get(
+      Uri.parse(url),
+    );
+
+    // decoding the response
+    final decodedResponse = jsonDecode(response.body);
+
+    // returning the move info
+    return decodedResponse['effect_entries'][0]['effect'];
+  }
 }
