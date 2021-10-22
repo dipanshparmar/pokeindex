@@ -281,17 +281,20 @@ class _PokemonPageState extends State<PokemonPage> {
         child: Row(
           children: abilities
               .map(
-                (e) => GestureDetector(
+                (ability) => GestureDetector(
                   onTap: () {
                     // pushing the ability page when there is a click on an ability
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AbilityPage(e),
+                        builder: (context) => AbilityPage(
+                          name: ability['ability']['name'],
+                          url: ability['ability']['url'],
+                        ),
                       ),
                     );
                   },
-                  child: CustomCard(e['ability']['name']),
+                  child: CustomCard(ability['ability']['name']),
                 ),
               )
               .toList(),

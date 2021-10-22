@@ -11,11 +11,17 @@ import '../widgets/widgets.dart';
 import '../utils/utils.dart';
 
 class AbilityPage extends StatefulWidget {
-  const AbilityPage(this._abilityData, {Key? key}) : super(key: key);
+  const AbilityPage({
+    Key? key,
+    required this.name,
+    required this.url,
+  }) : super(key: key);
 
-  // holding the ability data provided by the api.
-  // using only the name and the url of the ability
-  final Map _abilityData;
+  // holding the ability name
+  final String name;
+
+  // holding the ability url
+  final String url;
 
   @override
   State<AbilityPage> createState() => _AbilityPageState();
@@ -32,7 +38,7 @@ class _AbilityPageState extends State<AbilityPage> {
     // assigning the future
     _future = Provider.of<PokemonProvider>(context, listen: false)
         .loadAbilityDescription(
-      widget._abilityData['ability']['url'],
+      widget.url,
     );
   }
 
@@ -42,7 +48,7 @@ class _AbilityPageState extends State<AbilityPage> {
       appBar: AppBar(
         title: Text(
           UtilityMethods.getName(
-            widget._abilityData['ability']['name'],
+            widget.name,
           ),
         ),
       ),
