@@ -27,7 +27,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the response
-    final decodedResponse = jsonDecode(response.body);
+    final Map decodedResponse = jsonDecode(response.body);
 
     // getting the results
     final List results = decodedResponse['results'];
@@ -49,7 +49,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the data
-    final decodedData = jsonDecode(response.body);
+    final Map decodedData = jsonDecode(response.body);
 
     // getting the id
     final int id = decodedData['id'];
@@ -117,7 +117,7 @@ class PokemonProvider with ChangeNotifier {
     final http.Response response = await http.get(Uri.parse(url));
 
     // decoding the response
-    final decodedResponse = jsonDecode(response.body);
+    final Map decodedResponse = jsonDecode(response.body);
 
     // returning the first description
     return (decodedResponse['flavor_text_entries'][0]['flavor_text'] as String)
@@ -135,7 +135,7 @@ class PokemonProvider with ChangeNotifier {
     } else {
       // if search type is move
       return _pokemon.moves
-          .where((element) => element['move']['name'].contains(query))
+          .where((move) => move['move']['name'].contains(query))
           .toList();
     }
   }
@@ -148,7 +148,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the response
-    final decodedResponse = jsonDecode(response.body);
+    final Map decodedResponse = jsonDecode(response.body);
 
     // getting all the entries
     final List entries = decodedResponse['effect_entries'];
@@ -201,7 +201,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the response
-    final decodedResponse = jsonDecode(response.body);
+    final Map decodedResponse = jsonDecode(response.body);
 
     // returning the effect entry
     return decodedResponse['effect_entries'][0]['effect'];
@@ -215,7 +215,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the response
-    final decodedResponse = jsonDecode(response.body);
+    final Map decodedResponse = jsonDecode(response.body);
 
     // returning the move info
     return decodedResponse['effect_entries'][0]['effect'];
@@ -229,7 +229,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding response
-    final decodedData = jsonDecode(response.body);
+    final Map decodedData = jsonDecode(response.body);
 
     return decodedData;
   }
@@ -250,6 +250,7 @@ class PokemonProvider with ChangeNotifier {
       return;
     }
 
+    // making a recursive call with the next data
     fetchPokemonDataFromEvolutionChain(evolvesTo[0]);
   }
 
@@ -269,10 +270,10 @@ class PokemonProvider with ChangeNotifier {
     }
 
     // decoding the response
-    final data = jsonDecode(speciesResponse.body);
+    final Map data = jsonDecode(speciesResponse.body);
 
     // getting the evolution chain url
-    final evolutionChainLink = data['evolution_chain']['url'];
+    final String evolutionChainLink = data['evolution_chain']['url'];
 
     // making the request to the evolution chain
     final http.Response evolutionResponse = await http.get(
@@ -280,10 +281,10 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the body
-    final chainData = jsonDecode(evolutionResponse.body);
+    final Map chainData = jsonDecode(evolutionResponse.body);
 
     // getting the evolvesTo
-    final evolvesTo = chainData['chain'];
+    final Map evolvesTo = chainData['chain'];
 
     // fetching the pokemons
     fetchPokemonDataFromEvolutionChain(evolvesTo);
@@ -297,7 +298,7 @@ class PokemonProvider with ChangeNotifier {
     );
 
     // decoding the response
-    final decodedData = jsonDecode(response.body);
+    final Map decodedData = jsonDecode(response.body);
 
     // returning the move info
     return decodedData['effect_entries'][0]['effect'];
@@ -318,7 +319,7 @@ class PokemonProvider with ChangeNotifier {
   }
 
   // getter to get the type
-  get getType {
+  String get getType {
     return _pokemon.types[0]['type']['name'];
   }
 
