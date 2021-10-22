@@ -86,7 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                 physics: const BouncingScrollPhysics(),
                 itemCount: results.length,
                 itemBuilder: (context, index) {
-                  // getting the current result
+                  // getting the current result (dynamic because pokemon names are string and moves are map)
                   final result = results[index];
 
                   return widget._searchType == SearchType.pokemon

@@ -72,7 +72,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
                   itemCount: _pokemons.length,
                   itemBuilder: (context, index) {
                     // current pokemon
-                    final pokemon = _pokemons[index];
+                    final String pokemon = _pokemons[index];
 
                     return ListTile(
                       onTap: () {

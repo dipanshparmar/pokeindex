@@ -74,8 +74,8 @@ class _HomePageState extends State<HomePage> {
                     physics: const BouncingScrollPhysics(),
                     itemCount: obj.getNames.length,
                     itemBuilder: (context, index) {
-                      // current name and url
-                      final name = obj.getNames[index];
+                      // current name
+                      final String name = obj.getNames[index];
 
                       return PokemonTile(
                         name,
