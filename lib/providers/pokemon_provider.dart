@@ -10,8 +10,8 @@ import '../models/models.dart';
 import '../utils/utils.dart';
 
 class PokemonProvider with ChangeNotifier {
-  // this list will hold the map of the name and the url
-  List<dynamic> _pokemonNameAndUrl = [];
+  // this list will hold the map of the name and the url of all the pokemons once the data has been loaded
+  List<dynamic> _pokemonsNameAndUrl = [];
 
   // this will store the selected pokemon data
   late Pokemon _pokemon;
@@ -33,12 +33,7 @@ class PokemonProvider with ChangeNotifier {
     final results = decodedResponse['results'];
 
     // assigning the results to the pokemonNameAndUrl
-    _pokemonNameAndUrl = results;
-  }
-
-  // method to get names and urls
-  get getNamesAndUrls {
-    return [..._pokemonNameAndUrl];
+    _pokemonsNameAndUrl = results;
   }
 
   // method to fetch the data for a specific pokemon
@@ -124,26 +119,12 @@ class PokemonProvider with ChangeNotifier {
         .replaceAll('\n', ' ');
   }
 
-  int getWeightInKg(int weight) {
-    return weight ~/ 10;
-  }
-
-  // getter to get the type
-  get getType {
-    return _pokemon.types[0]['type']['name'];
-  }
-
-  // getter to get the pokemon
-  Pokemon get getPokemon {
-    return _pokemon;
-  }
-
   // method to get results according to the search query
   List<dynamic> getSearchResults(
       {required SearchType searchType, required String query}) {
     // if search type is pokemon
     if (searchType == SearchType.pokemon) {
-      return _pokemonNameAndUrl
+      return _pokemonsNameAndUrl
           .where((element) => element['name'].contains(query))
           .toList();
     } else {
@@ -303,11 +284,6 @@ class PokemonProvider with ChangeNotifier {
     fetchPokemonDataFromEvolutionChain(evolvesTo);
   }
 
-  // getter to get the pokemons of the chain
-  List<String> get getPokemonsOfChain {
-    return _pokemonsFromChain;
-  }
-
   // method to get the info about a move
   Future<String> getMoveInfo(String url) async {
     // making the get request
@@ -320,5 +296,29 @@ class PokemonProvider with ChangeNotifier {
 
     // returning the move info
     return decodedData['effect_entries'][0]['effect'];
+  }
+
+  // method to get names and urls
+  get getNamesAndUrls {
+    return [..._pokemonsNameAndUrl];
+  }
+
+  // getter to get the pokemons of the chain
+  List<String> get getPokemonsOfChain {
+    return _pokemonsFromChain;
+  }
+
+  int getWeightInKg(int weight) {
+    return weight ~/ 10;
+  }
+
+  // getter to get the type
+  get getType {
+    return _pokemon.types[0]['type']['name'];
+  }
+
+  // getter to get the pokemon
+  Pokemon get getPokemon {
+    return _pokemon;
   }
 }
