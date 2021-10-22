@@ -90,9 +90,7 @@ class _SearchPageState extends State<SearchPage> {
                   final result = results[index];
 
                   return widget._searchType == SearchType.pokemon
-                      ? PokemonTile(
-                          nameAndUrl: result,
-                        )
+                      ? PokemonTile(result)
                       : MoveTile(moveAndUrl: result);
                 },
               );

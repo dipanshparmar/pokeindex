@@ -72,12 +72,15 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, obj, child) {
                   return ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    itemCount: obj.getNamesAndUrls.length,
+                    itemCount: obj.getNames.length,
                     itemBuilder: (context, index) {
                       // current name and url
-                      final nameAndUrl = obj.getNamesAndUrls[index];
+                      final name = obj.getNames[index];
 
-                      return PokemonTile(nameAndUrl: nameAndUrl, index: index);
+                      return PokemonTile(
+                        name,
+                        index: index,
+                      );
                     },
                   );
                 },

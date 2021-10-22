@@ -7,13 +7,14 @@ import '../pages/pages.dart';
 import '../utils/utils.dart';
 
 class PokemonTile extends StatelessWidget {
-  const PokemonTile({
+  const PokemonTile(
+    this._name, {
     Key? key,
-    required this.nameAndUrl,
     this.index,
   }) : super(key: key);
 
-  final Map nameAndUrl;
+  //
+  final String _name;
 
   // index
   final int? index;
@@ -24,9 +25,7 @@ class PokemonTile extends StatelessWidget {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PokemonPage(
-            nameAndUrl['name'],
-          ),
+          builder: (context) => PokemonPage(_name),
         ),
       ),
       leading: Column(
@@ -42,7 +41,7 @@ class PokemonTile extends StatelessWidget {
         ],
       ),
       title: Text(
-        UtilityMethods.getName(nameAndUrl['name']),
+        UtilityMethods.getName(_name),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,

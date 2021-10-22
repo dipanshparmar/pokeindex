@@ -39,16 +39,18 @@ class _DamageExpensionTileState extends State<DamageExpensionTile> {
       ),
       onExpansionChanged: (value) {
         setState(() {
+          // updating the value and rebuilding the screen
           _isExpanded = value;
         });
       },
+
+      // if there is some data about the damages against other types, then build that
       children: widget.types.isNotEmpty
           ? widget.types
               .map(
                 (e) => ListTile(
                   title: Text(
-                    UtilityMethods
-                        .getName(e['name']),
+                    UtilityMethods.getName(e['name']),
                     style: const TextStyle(
                       fontSize: 14,
                     ),
@@ -58,6 +60,7 @@ class _DamageExpensionTileState extends State<DamageExpensionTile> {
               )
               .toList()
           : [
+              // otherwise just return none
               const ListTile(
                 title: Text(
                   'None!',

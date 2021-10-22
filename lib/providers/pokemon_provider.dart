@@ -10,8 +10,8 @@ import '../models/models.dart';
 import '../utils/utils.dart';
 
 class PokemonProvider with ChangeNotifier {
-  // this list will hold the map of the name and the url of all the pokemons once the data has been loaded
-  List<dynamic> _pokemonsNameAndUrl = [];
+  // this list will hold the names of the pokemons
+  final List<dynamic> _pokemonsNames = [];
 
   // this will store the selected pokemon data
   late Pokemon _pokemon;
@@ -30,10 +30,15 @@ class PokemonProvider with ChangeNotifier {
     final decodedResponse = jsonDecode(response.body);
 
     // getting the results
-    final results = decodedResponse['results'];
+    final List results = decodedResponse['results'];
 
-    // assigning the results to the pokemonNameAndUrl
-    _pokemonsNameAndUrl = results;
+    // emptying the names
+    _pokemonsNames.clear();
+
+    // assigning the names to the _pokemonsName
+    for (int i = 0; i < results.length; i++) {
+      _pokemonsNames.add(results[i]['name']);
+    }
   }
 
   // method to fetch the data for a specific pokemon
@@ -120,13 +125,13 @@ class PokemonProvider with ChangeNotifier {
   }
 
   // method to get results according to the search query
-  List<dynamic> getSearchResults(
-      {required SearchType searchType, required String query}) {
+  List<dynamic> getSearchResults({
+    required SearchType searchType,
+    required String query,
+  }) {
     // if search type is pokemon
     if (searchType == SearchType.pokemon) {
-      return _pokemonsNameAndUrl
-          .where((element) => element['name'].contains(query))
-          .toList();
+      return _pokemonsNames.where((name) => name.contains(query)).toList();
     } else {
       // if search type is move
       return _pokemon.moves
@@ -298,9 +303,9 @@ class PokemonProvider with ChangeNotifier {
     return decodedData['effect_entries'][0]['effect'];
   }
 
-  // method to get names and urls
-  get getNamesAndUrls {
-    return [..._pokemonsNameAndUrl];
+  // method to get names of the pokemons that are initially fetched
+  List<String> get getNames {
+    return [..._pokemonsNames];
   }
 
   // getter to get the pokemons of the chain

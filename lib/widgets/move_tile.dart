@@ -16,6 +16,7 @@ class MoveTile extends StatefulWidget {
     required this.moveAndUrl,
   }) : super(key: key);
 
+  // holding the move name and the url
   final Map moveAndUrl;
 
   @override
@@ -52,6 +53,7 @@ class _MoveTileState extends State<MoveTile> {
       ),
       onExpansionChanged: (value) {
         setState(() {
+          // updating the expanded state
           _isExpanded = value;
         });
       },
@@ -73,7 +75,7 @@ class _MoveTileState extends State<MoveTile> {
               // if error
               return const ErrorText();
             } else {
-              // if no error
+              // if no error then render the move description
               return Text(snapshot.data as String);
             }
           },
