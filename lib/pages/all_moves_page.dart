@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-// models
-import '../models/models.dart';
-
 // utils
 import '../utils/utils.dart';
 
@@ -13,17 +10,24 @@ import './pages.dart';
 import '../widgets/widgets.dart';
 
 class AllMovesPage extends StatelessWidget {
-  const AllMovesPage(this._pokemon, {Key? key}) : super(key: key);
+  const AllMovesPage({
+    Key? key,
+    required this.name,
+    required this.moves,
+  }) : super(key: key);
+
+  // storing the pokemon name
+  final String name;
 
   // storing the moves
-  final Pokemon _pokemon;
+  final List moves;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          UtilityMethods.getName('${_pokemon.name}\'s moves'),
+          UtilityMethods.getName('$name\'s moves'),
         ),
         actions: [
           IconButton(
@@ -43,9 +47,12 @@ class AllMovesPage extends StatelessWidget {
       // rendering the moves
       body: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: _pokemon.moves.length,
+        itemCount: moves.length,
         itemBuilder: (context, index) {
-          return MoveTile(moveAndUrl: _pokemon.moves[index]);
+          return MoveTile(
+            name: moves[index]['move']['name'],
+            url: moves[index]['move']['url'],
+          );
         },
       ),
     );

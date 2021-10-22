@@ -14,7 +14,7 @@ class AbilityPage extends StatefulWidget {
   const AbilityPage(this._abilityData, {Key? key}) : super(key: key);
 
   // holding the ability data provided by the api.
-  // using only the name and the url
+  // using only the name and the url of the ability
   final Map _abilityData;
 
   @override

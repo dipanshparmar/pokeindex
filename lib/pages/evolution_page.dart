@@ -16,7 +16,7 @@ import '../utils/utils.dart';
 class EvolutionPage extends StatefulWidget {
   const EvolutionPage(this._name, {Key? key}) : super(key: key);
 
-  // name
+  // name of the pokemon
   final String _name;
 
   @override

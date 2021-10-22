@@ -252,14 +252,17 @@ class _PokemonPageState extends State<PokemonPage> {
         child: Row(
           children: types
               .map(
-                (e) => GestureDetector(
+                (type) => GestureDetector(
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TypePage(e),
+                      builder: (context) => TypePage(
+                        name: type['type']['name'],
+                        url: type['type']['url'],
+                      ),
                     ),
                   ),
-                  child: CustomCard(e['type']['name']),
+                  child: CustomCard(type['type']['name']),
                 ),
               )
               .toList(),
@@ -334,7 +337,10 @@ class _PokemonPageState extends State<PokemonPage> {
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AllMovesPage(pokemon),
+          builder: (context) => AllMovesPage(
+            name: pokemon.name,
+            moves: pokemon.moves,
+          ),
         ),
       ),
       child: Row(
@@ -369,17 +375,20 @@ class _PokemonPageState extends State<PokemonPage> {
                 moves.length > 10 ? 10 : null,
               ) // if there are more than 10 moves then fetch first 10 moves only, otherwise fetch every move
               .map(
-                (e) => GestureDetector(
+                (move) => GestureDetector(
                   onTap: () {
                     // pushing the move page when there is a click on the move
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MovePage(e),
+                        builder: (context) => MovePage(
+                          name: move['move']['name'],
+                          url: move['move']['url'],
+                        ),
                       ),
                     );
                   },
-                  child: CustomCard(e['move']['name']),
+                  child: CustomCard(move['move']['name']),
                 ),
               )
               .toList(),

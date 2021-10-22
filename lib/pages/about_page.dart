@@ -13,7 +13,7 @@ import '../utils/utils.dart';
 class AboutPage extends StatefulWidget {
   const AboutPage(this._name, {Key? key}) : super(key: key);
 
-  // getting the name
+  // getting the name of the pokemon
   final String _name;
 
   @override

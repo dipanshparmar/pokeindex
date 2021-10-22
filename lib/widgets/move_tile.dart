@@ -13,11 +13,15 @@ import '../utils/utils.dart';
 class MoveTile extends StatefulWidget {
   const MoveTile({
     Key? key,
-    required this.moveAndUrl,
+    required this.name,
+    required this.url,
   }) : super(key: key);
 
-  // holding the move name and the url
-  final Map moveAndUrl;
+  // holding the move name
+  final String name;
+
+  // holding the move url
+  final String url;
 
   @override
   State<MoveTile> createState() => _MoveTileState();
@@ -33,7 +37,7 @@ class _MoveTileState extends State<MoveTile> {
 
     // assigning the future
     _future = Provider.of<PokemonProvider>(context, listen: false).getMoveInfo(
-      widget.moveAndUrl['move']['url'],
+      widget.url,
     );
   }
 
@@ -45,7 +49,7 @@ class _MoveTileState extends State<MoveTile> {
     return ExpansionTile(
       title: Text(
         UtilityMethods.getName(
-          widget.moveAndUrl['move']['name'],
+          widget.name,
         ),
         style: TextStyle(
           fontWeight: _isExpanded ? FontWeight.w600 : FontWeight.normal,
