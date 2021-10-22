@@ -24,7 +24,7 @@ class EvolutionPage extends StatefulWidget {
 }
 
 class _EvolutionPageState extends State<EvolutionPage> {
-  // to store the future
+  // to store the future that will load the evolution data
   late Future _future;
 
   @override
@@ -47,7 +47,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
       body: FutureBuilder(
         future: _future,
         builder: (context, snapshot) {
-          // if loading
+          // if loading then return a loading bar
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(
@@ -65,6 +65,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
                   Provider.of<PokemonProvider>(context, listen: false)
                       .getPokemonsOfChain;
 
+              // if there is pokemon's data then render that
               if (_pokemons.isNotEmpty) {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -104,7 +105,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
                     );
                   },
                 );
-              } else {
+              } else { // if no data then let the user know
                 return const Center(
                   child: Text('No evolution data found!'),
                 );

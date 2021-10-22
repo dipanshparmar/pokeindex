@@ -11,10 +11,10 @@ import '../widgets/widgets.dart';
 import '../utils/utils.dart';
 
 class TypePage extends StatefulWidget {
-  const TypePage(this.type, {Key? key}) : super(key: key);
+  const TypePage(this._type, {Key? key}) : super(key: key);
 
-  // type
-  final Map type;
+  // holding the type name and the url
+  final Map _type;
 
   @override
   State<TypePage> createState() => _TypePageState();
@@ -31,7 +31,7 @@ class _TypePageState extends State<TypePage> {
     // assigning the future
     _future =
         Provider.of<PokemonProvider>(context, listen: false).getTypeDamageInfo(
-      widget.type['type']['url'],
+      widget._type['type']['url'],
     );
   }
 
@@ -40,8 +40,7 @@ class _TypePageState extends State<TypePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          UtilityMethods
-              .getName(widget.type['type']['name']),
+          UtilityMethods.getName(widget._type['type']['name']),
         ),
       ),
       body: FutureBuilder(
@@ -87,6 +86,7 @@ class _TypePageState extends State<TypePage> {
               // getting no damage from
               final List noDamageTo = data['damage_relations']['no_damage_to'];
 
+              // rendering the data in tiles
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [

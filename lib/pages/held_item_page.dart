@@ -11,7 +11,7 @@ import '../utils/utils.dart';
 class HeldItemPage extends StatefulWidget {
   const HeldItemPage(this._name, this._url, {Key? key}) : super(key: key);
 
-  // getting the name and the url
+  // getting the name and the url of the held item
   final String _name;
   final String _url;
 
@@ -39,14 +39,13 @@ class _HeldItemPageState extends State<HeldItemPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          UtilityMethods
-              .getName(widget._name),
+          UtilityMethods.getName(widget._name),
         ),
       ),
       body: FutureBuilder(
         future: _future,
         builder: (context, snapshot) {
-          // if loading
+          // if loading then return a circular bar
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(

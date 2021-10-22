@@ -23,10 +23,11 @@ class PokemonPage extends StatefulWidget {
     this.fromEvolution = false,
   }) : super(key: key);
 
-  // getting the name and url of the pokemon
+  // getting the name of the pokemon
   final String _name;
 
   // to decide to show the evolution button or not
+  // will be used when accessing this screen from the evolution page
   final bool fromEvolution;
 
   @override
@@ -70,6 +71,7 @@ class _PokemonPageState extends State<PokemonPage> {
             if (snapshot.hasError) {
               return const ErrorText();
             } else {
+              // if there is data then render it by accessing from the provider
               return Consumer<PokemonProvider>(
                 builder: (context, obj, child) {
                   return Container(
@@ -85,6 +87,7 @@ class _PokemonPageState extends State<PokemonPage> {
                               Container(
                                 height: 300,
                                 padding: const EdgeInsets.all(20),
+                                // if there is no image url then let the user know, otherwise build the image
                                 child: obj.getPokemon.imageUrl != null
                                     ? FadeInImage.assetNetwork(
                                         placeholder:
@@ -95,12 +98,18 @@ class _PokemonPageState extends State<PokemonPage> {
                                         child: Text('No image data!'),
                                       ),
                               ),
-                              _buildStats(obj),
+                              // building the stats that are attack, defense, etc.
+                              _buildStats(obj.getPokemon),
+
+                              // builing the different data e.g. types, weight, held items, etc.
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  // building types
                                   const Heading('Type'),
-                                  _buildTypes(obj),
+                                  _buildTypes(obj.getPokemon.types),
+
+                                  // building weight
                                   const Heading('Weight'),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -110,26 +119,36 @@ class _PokemonPageState extends State<PokemonPage> {
                                       '${obj.getPokemon.weight} Kg',
                                     ),
                                   ),
+
+                                  // building abilites
                                   const Heading('Abilities'),
-                                  _buildAbilities(obj),
+                                  _buildAbilities(obj.getPokemon.abilities),
+
+                                  // if there are held items then print the heading
                                   if (obj.getPokemon.heldItems.isNotEmpty)
                                     const Heading('Held items'),
+                                  // if there are held items then build them
                                   if (obj.getPokemon.heldItems.isNotEmpty)
                                     _buildHeldItems(obj),
+
+                                  // if there are moves then build them
                                   if (obj.getPokemon.moves.isNotEmpty)
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Heading('Moves'),
-                                        // show the see all button only if there are moves > 10
+                                        // show the see all button only if the length of moves is greater than 10 (i.e. moves > 10)
                                         obj.getPokemon.moves.length > 10
                                             ? _buildSeeAllButton(obj.getPokemon)
                                             : const Text(''),
                                       ],
                                     ),
+                                  // if there are moves then build them
                                   if (obj.getPokemon.moves.isNotEmpty)
-                                    _buildMoves(obj),
+                                    _buildMoves(obj.getPokemon.moves),
+
+                                  // build some space from below
                                   const SizedBox(
                                     height: 20,
                                   ),
@@ -138,6 +157,7 @@ class _PokemonPageState extends State<PokemonPage> {
                             ],
                           ),
                         ),
+                        // building the about and the evolution button
                         _buildButtons(context),
                       ],
                     ),
@@ -147,6 +167,132 @@ class _PokemonPageState extends State<PokemonPage> {
             }
           }
         },
+      ),
+    );
+  }
+
+  // method for stats build
+  SingleChildScrollView _buildStats(Pokemon pokemon) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      clipBehavior: Clip.none,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 20,
+          ),
+          StatsCard(
+            icon: Icon(
+              Icons.bolt,
+              color: Colors.yellow.shade700,
+            ),
+            title: 'Attack',
+            value: pokemon.attack,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          StatsCard(
+            icon: const Icon(
+              Icons.shield_outlined,
+              color: Colors.green,
+            ),
+            title: 'Defense',
+            value: pokemon.defense,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          StatsCard(
+            icon: Icon(
+              Icons.flash_on,
+              color: Colors.yellow.shade700,
+            ),
+            title: 'Sp. attack',
+            value: pokemon.specialAttack,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          StatsCard(
+            icon: const Icon(
+              Icons.shield_outlined,
+              color: Colors.green,
+            ),
+            title: 'Sp. defense',
+            value: pokemon.specialDefense,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+          StatsCard(
+            icon: const Icon(
+              Icons.directions_run,
+              color: Colors.indigo,
+            ),
+            title: 'Speed',
+            value: pokemon.speed,
+          ),
+          const SizedBox(
+            width: 20,
+          ),
+        ],
+      ),
+    );
+  }
+
+  // method to build types
+  Widget _buildTypes(List types) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
+        child: Row(
+          children: types
+              .map(
+                (e) => GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TypePage(e),
+                    ),
+                  ),
+                  child: CustomCard(e['type']['name']),
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
+
+  // method to build abilites
+  Widget _buildAbilities(List abilities) {
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
+        child: Row(
+          children: abilities
+              .map(
+                (e) => GestureDetector(
+                  onTap: () {
+                    // pushing the ability page when there is a click on an ability
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AbilityPage(e),
+                      ),
+                    );
+                  },
+                  child: CustomCard(e['ability']['name']),
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }
@@ -207,6 +353,41 @@ class _PokemonPageState extends State<PokemonPage> {
     );
   }
 
+  // method to build moves
+  Widget _buildMoves(List moves) {
+    // builing the moves
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20.0, right: 10),
+        child: Row(
+          // only showing 10 moves so that 'see more' button makes some sense
+          children: moves
+              .sublist(
+                0,
+                moves.length > 10 ? 10 : null,
+              ) // if there are more than 10 moves then fetch first 10 moves only, otherwise fetch every move
+              .map(
+                (e) => GestureDetector(
+                  onTap: () {
+                    // pushing the move page when there is a click on the move
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MovePage(e),
+                      ),
+                    );
+                  },
+                  child: CustomCard(e['move']['name']),
+                ),
+              )
+              .toList(),
+        ),
+      ),
+    );
+  }
+
   // method to build the buttons
   Padding _buildButtons(BuildContext context) {
     return Padding(
@@ -225,12 +406,15 @@ class _PokemonPageState extends State<PokemonPage> {
                   ),
                 ),
               ),
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AboutPage(widget._name),
-                ),
-              ),
+              onPressed: () {
+                // pushing the about page with the name when there is a click on the about button
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AboutPage(widget._name),
+                  ),
+                );
+              },
               child: const Text(
                 'ABOUT',
                 style: TextStyle(
@@ -240,6 +424,8 @@ class _PokemonPageState extends State<PokemonPage> {
               ),
             ),
           ),
+
+          // if current screen was not pushed from the evolution page then add some spacing and the evolution button
           if (!widget.fromEvolution)
             const SizedBox(
               width: 20,
@@ -257,12 +443,15 @@ class _PokemonPageState extends State<PokemonPage> {
                     ),
                   ),
                 ),
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EvolutionPage(widget._name),
-                  ),
-                ),
+                onPressed: () {
+                  // pushing the evolution page when there is a click on the evolution button
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EvolutionPage(widget._name),
+                    ),
+                  );
+                },
                 child: const Text(
                   'EVOLUTION',
                   style: TextStyle(
@@ -272,164 +461,6 @@ class _PokemonPageState extends State<PokemonPage> {
                 ),
               ),
             )
-        ],
-      ),
-    );
-  }
-
-  // method to build moves
-  Widget _buildMoves(PokemonProvider obj) {
-    // getting the moves
-    final moves = obj.getPokemon.moves;
-
-    // builing the moves
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 10),
-        child: Row(
-          // only showing 10 moves
-          children: moves
-              .sublist(
-                0,
-                moves.length > 10 ? 10 : null,
-              ) // if there are more than 10 moves then fetch first 10 moves only, otherwise fetch every move
-              .map(
-                (e) => GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MovePage(e),
-                    ),
-                  ),
-                  child: CustomCard(e['move']['name']),
-                ),
-              )
-              .toList(),
-        ),
-      ),
-    );
-  }
-
-  // method to build abilites
-  Widget _buildAbilities(PokemonProvider obj) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 10),
-        child: Row(
-          children: obj.getPokemon.abilities
-              .map(
-                (e) => GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AbilityPage(e),
-                    ),
-                  ),
-                  child: CustomCard(e['ability']['name']),
-                ),
-              )
-              .toList(),
-        ),
-      ),
-    );
-  }
-
-  // method to build types
-  Widget _buildTypes(PokemonProvider obj) {
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20.0, right: 10),
-        child: Row(
-          children: obj.getPokemon.types
-              .map(
-                (e) => GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TypePage(e),
-                    ),
-                  ),
-                  child: CustomCard(e['type']['name']),
-                ),
-              )
-              .toList(),
-        ),
-      ),
-    );
-  }
-
-  // method for stats build
-  SingleChildScrollView _buildStats(PokemonProvider obj) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      clipBehavior: Clip.none,
-      physics: const BouncingScrollPhysics(),
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 20,
-          ),
-          StatsCard(
-            icon: Icon(
-              Icons.bolt,
-              color: Colors.yellow.shade700,
-            ),
-            title: 'Attack',
-            value: obj.getPokemon.attack,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          StatsCard(
-            icon: const Icon(
-              Icons.shield_outlined,
-              color: Colors.green,
-            ),
-            title: 'Defense',
-            value: obj.getPokemon.defense,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          StatsCard(
-            icon: Icon(
-              Icons.flash_on,
-              color: Colors.yellow.shade700,
-            ),
-            title: 'Sp. attack',
-            value: obj.getPokemon.specialAttack,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          StatsCard(
-            icon: const Icon(
-              Icons.shield_outlined,
-              color: Colors.green,
-            ),
-            title: 'Sp. defense',
-            value: obj.getPokemon.specialDefense,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
-          StatsCard(
-            icon: const Icon(
-              Icons.directions_run,
-              color: Colors.indigo,
-            ),
-            title: 'Speed',
-            value: obj.getPokemon.speed,
-          ),
-          const SizedBox(
-            width: 20,
-          ),
         ],
       ),
     );

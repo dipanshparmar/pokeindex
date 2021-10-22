@@ -1,3 +1,4 @@
+// model for the pokemon
 class Pokemon {
   final int id;
   final String name;

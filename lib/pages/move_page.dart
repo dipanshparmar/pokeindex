@@ -11,10 +11,10 @@ import '../widgets/widgets.dart';
 import '../utils/utils.dart';
 
 class MovePage extends StatefulWidget {
-  const MovePage(this.moveData, {Key? key}) : super(key: key);
+  const MovePage(this._moveData, {Key? key}) : super(key: key);
 
-  // storing the move map with name and url
-  final Map moveData;
+  // storing the move map with name and url of the move
+  final Map _moveData;
 
   @override
   State<MovePage> createState() => _MovePageState();
@@ -30,7 +30,7 @@ class _MovePageState extends State<MovePage> {
 
     // assignign the future
     _future = Provider.of<PokemonProvider>(context, listen: false).loadMoveDesc(
-      widget.moveData['move']['url'],
+      widget._moveData['move']['url'],
     );
   }
 
@@ -40,7 +40,7 @@ class _MovePageState extends State<MovePage> {
       appBar: AppBar(
         title: Text(
           UtilityMethods.getName(
-            widget.moveData['move']['name'],
+            widget._moveData['move']['name'],
           ),
         ),
       ),

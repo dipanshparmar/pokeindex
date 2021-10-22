@@ -13,36 +13,39 @@ import './pages.dart';
 import '../widgets/widgets.dart';
 
 class AllMovesPage extends StatelessWidget {
-  const AllMovesPage(this.pokemon, {Key? key}) : super(key: key);
+  const AllMovesPage(this._pokemon, {Key? key}) : super(key: key);
 
   // storing the moves
-  final Pokemon pokemon;
+  final Pokemon _pokemon;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          UtilityMethods
-              .getName('${pokemon.name}\'s moves'),
+          UtilityMethods.getName('${_pokemon.name}\'s moves'),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SearchPage(SearchType.move),
-              ),
-            ),
+            onPressed: () {
+              // pushing the search page when there is a click on the search icon in the all moves page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPage(SearchType.move),
+                ),
+              );
+            },
           )
         ],
       ),
+      // rendering the moves
       body: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: pokemon.moves.length,
+        itemCount: _pokemon.moves.length,
         itemBuilder: (context, index) {
-          return MoveTile(moveAndUrl: pokemon.moves[index]);
+          return MoveTile(moveAndUrl: _pokemon.moves[index]);
         },
       ),
     );

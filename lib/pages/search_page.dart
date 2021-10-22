@@ -22,7 +22,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   // this will hold the value of the text field
-  String searchQuery = '';
+  String _searchQuery = '';
 
   // controller for the text field
   final _controller = TextEditingController();
@@ -55,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
               color: Colors.white70,
               onPressed: () => setState(() {
                 _controller.clear(); // clearing the value from the text field
-                searchQuery = ''; // clearing the value of the search text
+                _searchQuery = ''; // clearing the value of the search text
               }),
             ),
           ),
@@ -64,7 +64,8 @@ class _SearchPageState extends State<SearchPage> {
           ),
           onChanged: (value) {
             setState(() {
-              searchQuery = value;
+              // assigning new value to the search query
+              _searchQuery = value;
             });
           },
         ),
@@ -72,11 +73,11 @@ class _SearchPageState extends State<SearchPage> {
       body: Consumer<PokemonProvider>(
         builder: (context, obj, child) {
           // if search query is not empty
-          if (searchQuery.isNotEmpty) {
+          if (_searchQuery.isNotEmpty) {
             // getting the search results according to the search type and the query
             final List results = obj.getSearchResults(
               searchType: widget._searchType,
-              query: searchQuery,
+              query: _searchQuery,
             );
 
             // if there are results

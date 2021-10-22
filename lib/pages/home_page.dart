@@ -21,6 +21,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // this will hold the future that will load pokemon's name and url to more info
   late Future _loadPokemonsInfo;
 
   @override

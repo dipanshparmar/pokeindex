@@ -13,7 +13,7 @@ import '../utils/utils.dart';
 class AboutPage extends StatefulWidget {
   const AboutPage(this._name, {Key? key}) : super(key: key);
 
-  // getting the name and the url
+  // getting the name
   final String _name;
 
   @override
