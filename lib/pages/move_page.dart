@@ -7,6 +7,9 @@ import '../providers/providers.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class MovePage extends StatefulWidget {
   const MovePage(this.moveData, {Key? key}) : super(key: key);
 
@@ -36,7 +39,7 @@ class _MovePageState extends State<MovePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false).getName(
+          UtilityMethods.getName(
             widget.moveData['move']['name'],
           ),
         ),

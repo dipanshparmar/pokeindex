@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-// providers
-import '../providers/providers.dart';
 
 // pages
 import '../pages/pages.dart';
+
+// utils
+import '../utils/utils.dart';
 
 class PokemonTile extends StatelessWidget {
   const PokemonTile({
@@ -43,8 +42,7 @@ class PokemonTile extends StatelessWidget {
         ],
       ),
       title: Text(
-        Provider.of<PokemonProvider>(context, listen: false)
-            .getName(nameAndUrl['name']),
+        UtilityMethods.getName(nameAndUrl['name']),
       ),
       trailing: Icon(
         Icons.arrow_forward_ios,

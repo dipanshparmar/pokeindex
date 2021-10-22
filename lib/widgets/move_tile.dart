@@ -7,6 +7,9 @@ import '../providers/providers.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class MoveTile extends StatefulWidget {
   const MoveTile({
     Key? key,
@@ -40,7 +43,7 @@ class _MoveTileState extends State<MoveTile> {
   Widget build(BuildContext context) {
     return ExpansionTile(
       title: Text(
-        Provider.of<PokemonProvider>(context, listen: false).getName(
+        UtilityMethods.getName(
           widget.moveAndUrl['move']['name'],
         ),
         style: TextStyle(

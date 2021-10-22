@@ -308,11 +308,6 @@ class PokemonProvider with ChangeNotifier {
     return _pokemonsFromChain;
   }
 
-  // method to get the name by converting the first char to uppercase
-  String getName(String name) {
-    return name[0].toUpperCase() + name.substring(1);
-  }
-
   // method to get the info about a move
   Future<String> getMoveInfo(String url) async {
     // making the get request

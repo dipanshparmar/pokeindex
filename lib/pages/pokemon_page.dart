@@ -51,8 +51,7 @@ class _PokemonPageState extends State<PokemonPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false)
-              .getName(widget._name),
+          UtilityMethods.getName(widget._name),
         ),
       ),
       body: FutureBuilder(
@@ -173,8 +172,7 @@ class _PokemonPageState extends State<PokemonPage> {
                     ),
                   ),
                   child: CustomCard(
-                    Provider.of<PokemonProvider>(context, listen: false)
-                        .getName(e['item']['name']),
+                    UtilityMethods.getName(e['item']['name']),
                   ),
                 ),
               )

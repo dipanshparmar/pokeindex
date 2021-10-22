@@ -7,6 +7,9 @@ import '../providers/pokemon_provider.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class AbilityPage extends StatefulWidget {
   const AbilityPage(this.abilityData, {Key? key}) : super(key: key);
 
@@ -37,7 +40,7 @@ class _AbilityPageState extends State<AbilityPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false).getName(
+          UtilityMethods.getName(
             widget.abilityData['ability']['name'],
           ),
         ),

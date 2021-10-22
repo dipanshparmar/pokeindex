@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 // models
 import '../models/models.dart';
@@ -13,9 +12,6 @@ import './pages.dart';
 // widgets
 import '../widgets/widgets.dart';
 
-// providers
-import '../providers/providers.dart';
-
 class AllMovesPage extends StatelessWidget {
   const AllMovesPage(this.pokemon, {Key? key}) : super(key: key);
 
@@ -27,7 +23,7 @@ class AllMovesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false)
+          UtilityMethods
               .getName('${pokemon.name}\'s moves'),
         ),
         actions: [

@@ -10,6 +10,9 @@ import './pages.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class EvolutionPage extends StatefulWidget {
   const EvolutionPage(this._name, {Key? key}) : super(key: key);
 
@@ -38,8 +41,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false)
-              .getName('${widget._name}\'s evolution'),
+          UtilityMethods.getName('${widget._name}\'s evolution'),
         ),
       ),
       body: FutureBuilder(
@@ -84,8 +86,7 @@ class _EvolutionPageState extends State<EvolutionPage> {
                         );
                       },
                       title: Text(
-                        Provider.of<PokemonProvider>(context, listen: false)
-                            .getName(pokemon),
+                        UtilityMethods.getName(pokemon),
                         style: TextStyle(
                           color: widget._name == pokemon
                               ? Theme.of(context).primaryColor

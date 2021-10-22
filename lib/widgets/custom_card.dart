@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-// providers
-import '../providers/providers.dart';
+// utils
+import '../utils/utils.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard(this.text, {Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class CustomCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       margin: const EdgeInsets.only(right: 10),
       child: Text(
-        Provider.of<PokemonProvider>(context, listen: false).getName(text),
+        UtilityMethods.getName(text),
       ),
     );
   }

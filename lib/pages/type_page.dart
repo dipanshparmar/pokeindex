@@ -7,6 +7,9 @@ import '../providers/providers.dart';
 // widgets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class TypePage extends StatefulWidget {
   const TypePage(this.type, {Key? key}) : super(key: key);
 
@@ -37,7 +40,7 @@ class _TypePageState extends State<TypePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context)
+          UtilityMethods
               .getName(widget.type['type']['name']),
         ),
       ),

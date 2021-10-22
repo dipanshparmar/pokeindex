@@ -5,6 +5,9 @@ import 'package:provider/provider.dart';
 // providers
 import '../providers/providers.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class HeldItemPage extends StatefulWidget {
   const HeldItemPage(this._name, this._url, {Key? key}) : super(key: key);
 
@@ -36,7 +39,7 @@ class _HeldItemPageState extends State<HeldItemPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false)
+          UtilityMethods
               .getName(widget._name),
         ),
       ),

@@ -7,6 +7,9 @@ import '../providers/providers.dart';
 // widggets
 import '../widgets/widgets.dart';
 
+// utils
+import '../utils/utils.dart';
+
 class AboutPage extends StatefulWidget {
   const AboutPage(this._name, {Key? key}) : super(key: key);
 
@@ -36,7 +39,7 @@ class _AboutPageState extends State<AboutPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          Provider.of<PokemonProvider>(context, listen: false)
+          UtilityMethods
               .getName('${widget._name}\'s about'),
         ),
       ),
