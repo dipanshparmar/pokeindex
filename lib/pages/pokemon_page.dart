@@ -404,7 +404,7 @@ class _PokemonPageState extends State<PokemonPage> {
               Icons.flash_on,
               color: Colors.yellow.shade700,
             ),
-            title: 'S. attack',
+            title: 'Sp. attack',
             value: obj.getPokemon.specialAttack,
           ),
           const SizedBox(
@@ -415,7 +415,7 @@ class _PokemonPageState extends State<PokemonPage> {
               Icons.shield_outlined,
               color: Colors.green,
             ),
-            title: 'S. defense',
+            title: 'Sp. defense',
             value: obj.getPokemon.specialDefense,
           ),
           const SizedBox(
