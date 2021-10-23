@@ -11,7 +11,7 @@ class ErrorText extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(20.0),
         child: Text(
-          'Oops! Something went wrong.',
+          'Oops! Something went wrong. Try opening the page again or restarting the app and make sure that you have the internet access.',
           textAlign: TextAlign.center,
         ),
       ),
