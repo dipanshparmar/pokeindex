@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +11,9 @@ import '../widgets/widgets.dart';
 
 // utils
 import '../utils/utils.dart';
+
+// pages
+import '../pages/pages.dart';
 
 class MoveTile extends StatefulWidget {
   const MoveTile({
@@ -76,8 +81,31 @@ class _MoveTileState extends State<MoveTile> {
 
             // if loaded
             if (snapshot.hasError) {
-              // if error
-              return const ErrorText();
+              // page that will be pushed
+              Widget page = AllMovesPage(
+                name: widget.name,
+                moves: Provider.of<PokemonProvider>(context, listen: false)
+                    .getPokemon
+                    .moves,
+              );
+
+              // text to display
+              String text = 'Something went wrong!';
+
+              // if it is a socket exception
+              if (snapshot.error.runtimeType == SocketException) {
+                text = 'Either no internet connection or the server is down.';
+              }
+
+              // returning the error text
+              return Column(
+                children: [
+                  ErrorText(text: text, page: page),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              );
             } else {
               // if no error then render the move description
               return Text(snapshot.data as String);

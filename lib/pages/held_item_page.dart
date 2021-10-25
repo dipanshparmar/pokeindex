@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pokedex/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -56,7 +58,19 @@ class _HeldItemPageState extends State<HeldItemPage> {
             // if completed
             // if error
             if (snapshot.hasError) {
-              return const ErrorText();
+              // page that will be pushed
+              Widget page = HeldItemPage(widget._name, widget._url);
+
+              // text to display
+              String text = 'Something went wrong!';
+
+              // if it is a socket exception
+              if (snapshot.error.runtimeType == SocketException) {
+                text = 'Either no internet connection or the server is down.';
+              }
+
+              // returning the error text
+              return ErrorText(text: text, page: page);
             } else {
               // if data
               return Padding(

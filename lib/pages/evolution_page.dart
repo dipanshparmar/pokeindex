@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +59,19 @@ class _EvolutionPageState extends State<EvolutionPage> {
           } else {
             // if error
             if (snapshot.hasError) {
-              return const ErrorText();
+              // page that will be pushed
+              Widget page = EvolutionPage(widget._name);
+
+              // text to display
+              String text = 'Something went wrong!';
+
+              // if it is a socket exception
+              if (snapshot.error.runtimeType == SocketException) {
+                text = 'Either no internet connection or the server is down.';
+              }
+
+              // returning the error text
+              return ErrorText(text: text, page: page);
             } else {
               // if data
               // getting the pokemons from the chain once the fetching is complete
@@ -105,7 +119,8 @@ class _EvolutionPageState extends State<EvolutionPage> {
                     );
                   },
                 );
-              } else { // if no data then let the user know
+              } else {
+                // if no data then let the user know
                 return const Center(
                   child: Text('No evolution data found!'),
                 );
