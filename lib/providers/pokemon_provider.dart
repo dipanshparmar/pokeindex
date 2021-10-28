@@ -127,7 +127,9 @@ class PokemonProvider with ChangeNotifier {
   }) {
     // if search type is pokemon
     if (searchType == SearchType.pokemon) {
-      return _pokemonsNames.where((name) => name.contains(query)).toList();
+      return _pokemonsNames
+          .where((name) => name.contains(query.trim()))
+          .toList();
     } else {
       // if search type is move
       return _pokemon.moves
