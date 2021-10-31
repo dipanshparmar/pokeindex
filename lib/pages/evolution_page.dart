@@ -77,62 +77,65 @@ class _EvolutionPageState extends State<EvolutionPage> {
               final obj = Provider.of<PokemonProvider>(context, listen: false);
 
               // getting the initial pokemon name of the evolution
-              final String initialPokemonNameOfEvolution =
+              final String? initialPokemonNameOfEvolution =
                   obj.initialPokemonOfEvolution;
 
               // getting the list of list of maps that hold the data of the evolution
               final List<List<Map>> listOfListOfMap = obj.getPokemonsOfChain;
 
-              // TODO: ADD FOR EMPTY LIST AS WELL
-
               // returning a column
-              return ListView(
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  EvolutionTile(
-                    name: initialPokemonNameOfEvolution,
-                    subtitle: 'base',
-                    number: 1,
-                    shouldHighlight:
-                        widget._name == initialPokemonNameOfEvolution,
-                  ),
-                  ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: listOfListOfMap.length,
-                    itemBuilder: (context, indexOutside) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: listOfListOfMap[indexOutside].length,
-                        itemBuilder: (context, indexInside) {
-                          // getting current map data
-                          final mapData =
-                              listOfListOfMap[indexOutside][indexInside];
+              return initialPokemonNameOfEvolution != null
+                  ? ListView(
+                      physics: const BouncingScrollPhysics(),
+                      children: [
+                        EvolutionTile(
+                          name: initialPokemonNameOfEvolution,
+                          subtitle: 'base',
+                          number: 1,
+                          shouldHighlight:
+                              widget._name == initialPokemonNameOfEvolution,
+                        ),
+                        ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: listOfListOfMap.length,
+                          itemBuilder: (context, indexOutside) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: listOfListOfMap[indexOutside].length,
+                              itemBuilder: (context, indexInside) {
+                                // getting current map data
+                                final mapData =
+                                    listOfListOfMap[indexOutside][indexInside];
 
-                          return Row(
-                            children: [
-                              SizedBox(
-                                width: (20 * (indexInside + 1)).toDouble(),
-                              ),
-                              Expanded(
-                                child: EvolutionTile(
-                                  name: mapData['name'],
-                                  subtitle:
-                                      mapData['item'] ?? mapData['trigger'],
-                                  number: indexInside + 2,
-                                  shouldHighlight:
-                                      widget._name == mapData['name'],
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                  )
-                ],
-              );
+                                return Row(
+                                  children: [
+                                    SizedBox(
+                                      width:
+                                          (20 * (indexInside + 1)).toDouble(),
+                                    ),
+                                    Expanded(
+                                      child: EvolutionTile(
+                                        name: mapData['name'],
+                                        subtitle: mapData['item'] ??
+                                            mapData['trigger'],
+                                        number: indexInside + 2,
+                                        shouldHighlight:
+                                            widget._name == mapData['name'],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        )
+                      ],
+                    )
+                  : const Center(
+                      child: Text('No evolution data found!'),
+                    );
             }
           }
         },

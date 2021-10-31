@@ -17,7 +17,7 @@ class PokemonProvider with ChangeNotifier {
   late Pokemon _pokemon;
 
   // this will hold the initial pokemon name of the evolution
-  late String _initialPokemonOfEvolution;
+  String? _initialPokemonOfEvolution;
 
   // list of map to hold the evolution pokemon names
   final List<List<Map>> _pokemonsFromChain = [];
@@ -317,6 +317,8 @@ class PokemonProvider with ChangeNotifier {
 
       // if response is not found then just return
       if (speciesResponse.body.toLowerCase() == 'not found') {
+        // clearing the name if there is any
+        _initialPokemonOfEvolution = null;
         return;
       }
 
@@ -393,7 +395,7 @@ class PokemonProvider with ChangeNotifier {
   }
 
   // getter to get the initial pokemon name of the evolution
-  String get initialPokemonOfEvolution {
+  String? get initialPokemonOfEvolution {
     return _initialPokemonOfEvolution;
   }
 }
