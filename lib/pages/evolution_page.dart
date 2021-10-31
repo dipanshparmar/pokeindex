@@ -93,6 +93,8 @@ class _EvolutionPageState extends State<EvolutionPage> {
                     name: initialPokemonNameOfEvolution,
                     subtitle: 'base',
                     number: 1,
+                    shouldHighlight:
+                        widget._name == initialPokemonNameOfEvolution,
                   ),
                   ListView.builder(
                     physics: const ClampingScrollPhysics(),
@@ -119,6 +121,8 @@ class _EvolutionPageState extends State<EvolutionPage> {
                                   subtitle:
                                       mapData['item'] ?? mapData['trigger'],
                                   number: indexInside + 2,
+                                  shouldHighlight:
+                                      widget._name == mapData['name'],
                                 ),
                               ),
                             ],
@@ -143,11 +147,15 @@ class EvolutionTile extends StatelessWidget {
     required this.name,
     required this.subtitle,
     required this.number,
+    required this.shouldHighlight,
   }) : super(key: key);
 
   final String name;
   final int number;
   final String subtitle;
+
+  // to decide what tile to highlight
+  final bool shouldHighlight;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +169,12 @@ class EvolutionTile extends StatelessWidget {
           ),
         ),
       ),
-      title: Text(UtilityMethods.getName(name)),
+      title: Text(
+        UtilityMethods.getName(name),
+        style: TextStyle(
+          color: shouldHighlight ? Theme.of(context).primaryColor : null,
+        ),
+      ),
       subtitle: Text(UtilityMethods.getName(subtitle)),
       trailing: Text(number.toString()),
     );
