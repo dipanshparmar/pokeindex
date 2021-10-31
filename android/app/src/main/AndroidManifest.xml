@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.pokedex">
+    package="com.pokeindex.pokemon.pokepedia.free">
+
+    <!-- permissions -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
    <application
-        android:label="pokedex"
+        android:label="Pokeindex"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
