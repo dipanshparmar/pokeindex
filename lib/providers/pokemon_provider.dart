@@ -250,8 +250,9 @@ class PokemonProvider with ChangeNotifier {
       // decoding the response
       final Map decodedResponse = jsonDecode(response.body);
 
-      // returning the move info
-      return decodedResponse['effect_entries'][0]['effect'];
+      // try to return the move info
+      return decodedResponse['effect_entries'].firstWhere(
+          (element) => element['language']['name'] == 'en')['effect'];
     } catch (e) {
       return Future.error(e);
     }
