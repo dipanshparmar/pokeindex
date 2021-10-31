@@ -16,8 +16,14 @@ class PokemonProvider with ChangeNotifier {
   // this will store the selected pokemon data
   late Pokemon _pokemon;
 
+  // this will hold the initial pokemon name of the evolution
+  late String _initialPokemonOfEvolution;
+
   // list of map to hold the evolution pokemon names
-  final List<String> _pokemonsFromChain = [];
+  final List<List<Map>> _pokemonsFromChain = [];
+
+  // temporary list to hold the data of nest evolution chains, will work parallaly with the _pokemonsFromChain list
+  List<Map> _tmpEvolutionChainPokemons = [];
 
   // method to fetch pokemon names and URLs
   Future<void> fetchPokemons() async {
@@ -254,22 +260,48 @@ class PokemonProvider with ChangeNotifier {
 
   // method to find each pokemon's name and url from the chain
   // works together with loadEvolutionData method
-  void fetchPokemonDataFromEvolutionChain(Map data) {
-    // getting the name
-    final String name = data['species']['name'];
+  void fetchPokemonDataFromEvolutionChain(List data) {
+    // getting the list size
+    final int size = data.length;
 
-    // appending the data
-    _pokemonsFromChain.add(name);
+    // for each map in the passed list data
+    for (int i = 0; i < size; i++) {
+      // getting current map data
+      final Map mapData = data[i];
 
-    // getting evolvesTo
-    final List evolvesTo = data['evolves_to'];
+      // getting the evolution details
+      final Map evolutionDetails = mapData['evolution_details'][0];
 
-    if (evolvesTo.isEmpty) {
-      return;
+      // getting the trigger
+      final String trigger = evolutionDetails['trigger']['name'];
+
+      // getting the item map with the name and the url. can be null if the evolution is by levelling up
+      final Map? itemMap = evolutionDetails['item'];
+
+      // getting the pokemon name
+      final String name = mapData['species']['name'];
+
+      // pushing the map of the data to the _tmpEvolutionChainPokemons
+      _tmpEvolutionChainPokemons.add({
+        'name': name,
+        'trigger': trigger,
+        'item': itemMap != null ? itemMap['name'] : null,
+      });
+
+      // getting evolves to
+      final List evolvesTo = mapData['evolves_to'];
+
+      // if evolves to is not empty then pass this new data to the recursive call
+      if (evolvesTo.isNotEmpty) {
+        fetchPokemonDataFromEvolutionChain(evolvesTo);
+      }
+
+      // pushing the data from the tmp list to the main list
+      _pokemonsFromChain.add(_tmpEvolutionChainPokemons);
+
+      // clearing the temporary list for the next usage
+      _tmpEvolutionChainPokemons = [];
     }
-
-    // making a recursive call with the next data
-    fetchPokemonDataFromEvolutionChain(evolvesTo[0]);
   }
 
   // method to load the chain
@@ -302,8 +334,14 @@ class PokemonProvider with ChangeNotifier {
       // decoding the body
       final Map chainData = jsonDecode(evolutionResponse.body);
 
+      // getting the initial pokemon name
+      final String name = chainData['chain']['species']['name'];
+
+      // setting the initial pokemon name from evolution
+      _initialPokemonOfEvolution = name;
+
       // getting the evolvesTo
-      final Map evolvesTo = chainData['chain'];
+      final List evolvesTo = chainData['chain']['evolves_to'];
 
       // fetching the pokemons
       fetchPokemonDataFromEvolutionChain(evolvesTo);
@@ -336,7 +374,7 @@ class PokemonProvider with ChangeNotifier {
   }
 
   // getter to get the pokemons of the chain
-  List<String> get getPokemonsOfChain {
+  List<List<Map>> get getPokemonsOfChain {
     return _pokemonsFromChain;
   }
 
@@ -352,5 +390,10 @@ class PokemonProvider with ChangeNotifier {
   // getter to get the pokemon
   Pokemon get getPokemon {
     return _pokemon;
+  }
+
+  // getter to get the initial pokemon name of the evolution
+  String get initialPokemonOfEvolution {
+    return _initialPokemonOfEvolution;
   }
 }

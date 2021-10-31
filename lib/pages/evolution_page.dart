@@ -73,62 +73,97 @@ class _EvolutionPageState extends State<EvolutionPage> {
               // returning the error text
               return ErrorText(text: text, page: page);
             } else {
-              // if data
-              // getting the pokemons from the chain once the fetching is complete
-              final List<String> _pokemons =
-                  Provider.of<PokemonProvider>(context, listen: false)
-                      .getPokemonsOfChain;
+              // getting the pokemon provider object
+              final obj = Provider.of<PokemonProvider>(context, listen: false);
 
-              // if there is pokemon's data then render that
-              if (_pokemons.isNotEmpty) {
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: _pokemons.length,
-                  itemBuilder: (context, index) {
-                    // current pokemon
-                    final String pokemon = _pokemons[index];
+              // getting the initial pokemon name of the evolution
+              final String initialPokemonNameOfEvolution =
+                  obj.initialPokemonOfEvolution;
 
-                    return ListTile(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => PokemonPage(
-                              _pokemons[index],
-                              fromEvolution: true,
-                            ),
-                          ),
-                        );
-                      },
-                      title: Text(
-                        UtilityMethods.getName(pokemon),
-                        style: TextStyle(
-                          color: widget._name == pokemon
-                              ? Theme.of(context).primaryColor
-                              : null,
-                        ),
-                      ),
-                      trailing: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: widget._name == pokemon
-                              ? Theme.of(context).primaryColor
-                              : null,
-                        ),
-                      ),
-                    );
-                  },
-                );
-              } else {
-                // if no data then let the user know
-                return const Center(
-                  child: Text('No evolution data found!'),
-                );
-              }
+              // getting the list of list of maps that hold the data of the evolution
+              final List<List<Map>> listOfListOfMap = obj.getPokemonsOfChain;
+
+              // TODO: ADD FOR EMPTY LIST AS WELL
+
+              // returning a column
+              return ListView(
+                physics: const BouncingScrollPhysics(),
+                children: [
+                  EvolutionTile(
+                    name: initialPokemonNameOfEvolution,
+                    subtitle: 'base',
+                    number: 1,
+                  ),
+                  ListView.builder(
+                    physics: const ClampingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: listOfListOfMap.length,
+                    itemBuilder: (context, indexOutside) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: listOfListOfMap[indexOutside].length,
+                        itemBuilder: (context, indexInside) {
+                          // getting current map data
+                          final mapData =
+                              listOfListOfMap[indexOutside][indexInside];
+
+                          return Row(
+                            children: [
+                              SizedBox(
+                                width: (20 * (indexInside + 1)).toDouble(),
+                              ),
+                              Expanded(
+                                child: EvolutionTile(
+                                  name: mapData['name'],
+                                  subtitle:
+                                      mapData['item'] ?? mapData['trigger'],
+                                  number: indexInside + 2,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  )
+                ],
+              );
             }
           }
         },
       ),
+    );
+  }
+}
+
+class EvolutionTile extends StatelessWidget {
+  const EvolutionTile({
+    Key? key,
+    required this.name,
+    required this.subtitle,
+    required this.number,
+  }) : super(key: key);
+
+  final String name;
+  final int number;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => PokemonPage(
+            name,
+            fromEvolution: true,
+          ),
+        ),
+      ),
+      title: Text(UtilityMethods.getName(name)),
+      subtitle: Text(UtilityMethods.getName(subtitle)),
+      trailing: Text(number.toString()),
     );
   }
 }
