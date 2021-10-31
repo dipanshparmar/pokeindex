@@ -67,6 +67,7 @@ class _AbilityPageState extends State<AbilityPage> {
           } else {
             // if error
             if (snapshot.hasError) {
+              print(snapshot.error);
               // page that will be pushed
               Widget page = AbilityPage(
                 name: widget.name,
@@ -85,6 +86,14 @@ class _AbilityPageState extends State<AbilityPage> {
               return ErrorText(text: text, page: page);
             } else {
               // if data
+              // if no description found then let the user know
+              if ((snapshot.data as String).toLowerCase() ==
+                  'no description found!') {
+                return Center(
+                  child: Text(snapshot.data as String),
+                );
+              }
+
               return Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(snapshot.data as String),

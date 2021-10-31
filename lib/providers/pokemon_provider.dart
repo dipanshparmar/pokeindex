@@ -158,10 +158,26 @@ class PokemonProvider with ChangeNotifier {
       // getting all the entries
       final List entries = decodedResponse['effect_entries'];
 
-      // returning the entry with english language because the response order is different each time
-      return entries.firstWhere(
-        (element) => element['language']['name'] == 'en',
-      )['effect'];
+      // if there are entries
+      if (entries.isNotEmpty) {
+        // returning the entry with english language because the response order is different each time
+        return entries.firstWhere(
+          (element) => element['language']['name'] == 'en',
+        )['effect'];
+      } else {
+        // if there are no effect entries then return the flavor_text_entry that is in english
+        // getting the flavor_text_entries
+        final List flavorTextEntries = decodedResponse['flavor_text_entries'];
+
+        // try to return the english text
+        try {
+          return flavorTextEntries.firstWhere(
+              (element) => element['language']['name'] == 'en')['flavor_text'];
+        } catch (e) {
+          // if no english text is found or the list is empty then just return that no description found
+          return 'No description found!';
+        }
+      }
     } catch (e) {
       return Future.error(e);
     }
