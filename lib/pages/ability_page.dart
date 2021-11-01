@@ -67,7 +67,6 @@ class _AbilityPageState extends State<AbilityPage> {
           } else {
             // if error
             if (snapshot.hasError) {
-              print(snapshot.error);
               // page that will be pushed
               Widget page = AbilityPage(
                 name: widget.name,
