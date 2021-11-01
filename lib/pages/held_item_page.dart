@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:pokedex/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 // providers
 import '../providers/providers.dart';
+
+// widgets
+import '../widgets/widgets.dart';
 
 // utils
 import '../utils/utils.dart';
