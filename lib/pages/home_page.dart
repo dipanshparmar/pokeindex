@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
     Provider.of<PokemonProvider>(context, listen: false).fetchPokemons();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pokedex'),
+        title: const Text('Pokeindex'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
