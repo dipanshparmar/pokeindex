@@ -43,4 +43,7 @@ Download the Pokeindex: Pokemon Information today and let the delight begin! Hav
 
 
 
-**It was supposed to be uploaded on the play store, but it couldn't make it because of some copyright issues. So uploading it here now :)**
+It was supposed to be uploaded on the play store, but it couldn't make it because of some copyright issues. So uploading it here now :)
+
+### Contributing:
+Not accepting pull requests right now but we can discuss if there is any major thing.
