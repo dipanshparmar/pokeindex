@@ -1,8 +1,5 @@
 # Pokeindex: Pokemon Information
 
-### Short description
-Pokeindex is a pokepedia app that provides detailed pokemon information for you.
-
 ### Description
 Pokeindex: Pokemon Information and Pokepedia app is here to make your day! 
 
