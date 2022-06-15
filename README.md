@@ -28,7 +28,7 @@ Download this app for free without spending a dime on it. Learn about your favor
 Download the Pokeindex: Pokemon Information today and let the delight begin! Have a great day!
 
 
-### Some screenshots to please your eyes
+### Some screenshots
 ![1](https://user-images.githubusercontent.com/49204837/140846057-e92ccfb3-9cd6-446f-bf1c-fb8a9ad506bf.png)
 ![2](https://user-images.githubusercontent.com/49204837/140846064-79707e66-5595-4d9b-a660-ba0dafbb2828.png)
 ![3](https://user-images.githubusercontent.com/49204837/140846065-d35e5894-0a78-4dcf-b9a7-74e87f090418.png)
